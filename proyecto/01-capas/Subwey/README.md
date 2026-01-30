@@ -6,6 +6,14 @@ La aplicación implementa operaciones **CRUD** (Crear, Leer, Actualizar y Elimin
 
 ---
 
+## Requisitos mínimos
+
+- **Python**
+  Necesario para usar el comando python -m para ejecutar el programa. Probado con la versión 3.13.7 (64 bit) 
+
+
+---
+
 ## 🧩 Funcionalidades
 
 - **Registrar ingrediente**  
@@ -27,7 +35,7 @@ La aplicación implementa operaciones **CRUD** (Crear, Leer, Actualizar y Elimin
 
 ## ▶️ Ejemplo de uso
 
-Para ejecutar la aplicación desde la raíz del proyecto:
+Para ejecutar la aplicación desde la raíz del proyecto (En este caso desde la carpeta 01-capas):
 
 ```bash
 python -m Subwey.frontend.menu_ingredientes
