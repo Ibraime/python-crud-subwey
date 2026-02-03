@@ -1,23 +1,19 @@
-# presentation/menu_ingredientes.py
+# presentation/menu_bocadillos.py
 # Maneja la interacción con el usuario mediante un menú en consola.
 # Es el archivo que hay que ejecutar por ahora para que funcione el programa
 # Altera la lista de ingredientes con el servicio_ingredientes que a su vez llama a repositorio_ingrediente cuando es necesario
 from Subwey.servicios.servicios_ingrediente import ServicioIngrediente
 from Subwey.backend.repositorio_ingrediente import RepositorioIngrediente
 
-from Subwey.frontend.menu_bocadillos import main_bocadillos 
-
 def mostrar_menu():
-    print("\n=== SUBWEY (ingredientes) ===")
-    print("1. Registrar ingrediente")
-    print("2. Consumir ingrediente")
-    print("3. Reponer ingrediente")
-    print("4. Eliminar ingrediente")
-    print("5. Listar ingredientes")
-    print("6. Menú de bocadillos")
-    print("7. Salir")
+    print("\n=== SUBWEY (bocadillos) ===")
+    print("1. Registrar bocadillo")
+    print("2. Modificar bocadillo")
+    print("4. Eliminar bocadillo")
+    print("5. Listar bocadillos")
+    print("6. Volver a ingredientes")
 
-def main():
+def main_bocadillos():
     # Inicializa el repositorio y servicio
     repo = RepositorioIngrediente()
     servicio = ServicioIngrediente(repo)
@@ -61,13 +57,9 @@ def main():
                         print(f"{nombre:<10} - {precio:<5.2f}€ - {stock:<5.2f} unidades")
                 else:
                     print(ingredientes)
-            # 6. Cambia al menú de bocadillos
-            elif opcion == "6":
-                print("Cambiando al menú de bocadillos...")
-                main_bocadillos() 
             # 12. Sale del menú finalizando el programa
-            elif opcion == "7":
-                print("Saliendo del programa.")
+            elif opcion == "6":
+                print("Saliendo del menú de bocadillos.")
                 break
             # Si escribe una opción no válida, avisa al usuario y vuelve al bucle
             else:
@@ -77,4 +69,4 @@ def main():
             print("X " + str(e))
 
 if __name__ == "__main__":
-    main()
+    main_bocadillos()

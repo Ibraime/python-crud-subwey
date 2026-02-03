@@ -1,10 +1,7 @@
 # domain/ingrediente.py
 class Ingrediente:
 
-    def __init__(self, nombre_ingrediente, precio, stock=0):
-        nombre = nombre_ingrediente.strip()
-        if not nombre:
-            raise ValueError("El nombre no puede estar vacío.")
+    def __init__(self, nombre, precio, stock=0):
         self._nombre = nombre
         self._precio = precio
         self._stock = stock
@@ -34,15 +31,14 @@ class Ingrediente:
         self._precio = valor
 
     @property
-    def precio(self,valor):
-        # validar precio > 0
-        if valor <= 0:
-            raise ValueError("El precio no puede ser menor que cero.")
-        self._precio = valor
+    def precio(self):
+        return self._precio
 
     @precio.setter
     def precio(self, valor):
-        self._precio = valor
+        # validar precio > 0
+        if valor <= 0:
+            raise ValueError("El precio no puede ser menor que cero.")
 
     def disponible(self):
          return "Agotado" if self._stock == 0 else "Disponible"
