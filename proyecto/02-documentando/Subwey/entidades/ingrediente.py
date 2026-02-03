@@ -9,26 +9,40 @@ class Ingrediente:
         self._precio = precio
         self._stock = stock
 
+    @property
     def nombre(self):
         return self._nombre
+    
+    @nombre.setter
+    def nombre(self, valor):
+        # validar no vacio y sin espacios laterales
+        texto = (valor or "").strip()
+        if not texto:
+            raise ValueError("El nombre no puede estar vacio.")
+        self._nombre = texto
 
+    @property
     def stock(self):
         return self._stock
+    
+    
+    @stock.setter
+    def stock(self, valor):
+        # validar stock > 0
+        if valor <= 0:
+            raise ValueError("El stock no puede ser menor que cero.")
+        self._precio = valor
 
-    def precio(self):
-        return self._precio
+    @property
+    def precio(self,valor):
+        # validar precio > 0
+        if valor <= 0:
+            raise ValueError("El precio no puede ser menor que cero.")
+        self._precio = valor
 
-    def consumir(self,cantidad):
-        if cantidad > self._stock:
-            raise ValueError("No se puede consumir: no hay suficiente stock.")
-        else:
-            self._stock -= cantidad
-
-    def reponer(self,cantidad):
-        if cantidad <= 0:
-            raise ValueError("No se puede reponer una cantidad negativa.")
-        else:
-            self._stock += cantidad
+    @precio.setter
+    def precio(self, valor):
+        self._precio = valor
 
     def disponible(self):
          return "Agotado" if self._stock == 0 else "Disponible"

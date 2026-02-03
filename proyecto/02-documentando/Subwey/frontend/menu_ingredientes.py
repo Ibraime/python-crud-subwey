@@ -12,7 +12,8 @@ def mostrar_menu():
     print("3. Reponer ingrediente")
     print("4. Eliminar ingrediente")
     print("5. Listar ingredientes")
-    print("6. Salir")
+    print("6. Menú de bocadillos")
+    print("7. Salir")
 
 def main():
     # Inicializa el repositorio y servicio
@@ -31,13 +32,13 @@ def main():
                     stock = 0
                 servicio.registrar_ingrediente(nombre,precio,float(stock))
                 print("✔ Ingrediente registrado correctamente.")
-            # 2. Especifica que nombre de ingrediente y cantidad para aumentar el stock
+            # 2. Especifica que nombre de ingrediente y cantidad para decrementar el stock
             elif opcion == "2":
                 nombre = input("Nombre del ingrediente: ").strip()
                 cantidad = float(input("Cantidad a consumir: ").strip())
                 servicio.consumir_ingrediente(nombre, cantidad)
                 print(f"✔ Se consumió el {nombre}")
-            # 3. Especifica que nombre de ingrediente y cantidad para decrementar el stock
+            # 3. Especifica que nombre de ingrediente y cantidad para aumentar el stock
             elif opcion == "3":
                 nombre = input("Nombre del ingrediente: ").strip()
                 cantidad = int(input("Cantidad a reponer: ").strip())
@@ -51,15 +52,18 @@ def main():
             # 5. Muestra la lista de ingredientes, en caso de que no haya ninguno da un aviso
             elif opcion == "5":
                 ingredientes = servicio.listar_ingredientes()
-                if not ingredientes:
-                    print("(No hay ingredientes registrados)")
-                else:
+                if isinstance(ingredientes, list):
                     print("\nListado de ingredientes:")
                     print("")
                     for nombre, precio, stock in ingredientes:
                         print(f"{nombre:<10} - {precio:<5.2f}€ - {stock:<5.2f} unidades")
-            # 6. Sale del menú finalizando el programa
+                else:
+                    print(ingredientes)
+            # 6. Cambia al menú de bocadillos
             elif opcion == "6":
+                pass
+            # 12. Sale del menú finalizando el programa
+            elif opcion == "7":
                 print("Saliendo del programa.")
                 break
             # Si escribe una opción no válida, avisa al usuario y vuelve al bucle

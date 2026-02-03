@@ -17,24 +17,58 @@ class RepositorioIngrediente:
         self._ingredientes = crear_ingredientes_iniciales()
 
     # Añade un ingrediente a la lista
-    def guardar(self, ingrediente):
-        self._ingredientes[ingrediente.nombre().lower()] = ingrediente
+    def guardar(self, nombre, precio, stock):
+        
+        if self.obtener_por_nombre(nombre.lower()) is not None:
+            raise ValueError("Ya existe un ingrediente con ese nombre.")
+        if precio <= 0 or precio is None:
+            raise ValueError("El precio es inválido.")
+        if stock < 0:
+            raise ValueError("El stock no puede ser negativo.")
+        ingrediente = Ingrediente(nombre.lower(), precio, stock)
+
+        self._ingredientes[ingrediente.nombre.lower()] = ingrediente
 
     # Obtiene un ingrediente en específico por su nombre
     def obtener_por_nombre(self, nombre):
         nombre = nombre.strip()
-        if not nombre:
-            return None
 
         if nombre.lower() in self._ingredientes.keys():
             return self._ingredientes[nombre.lower()]
         else:
-            return None
+            raise ValueError("El producto no existe.")
+
+    # Aumenta el stock de ingrediente en una cantidad específica
+    def reponer(self, nombre, cantidad):
+        ingrediente = self.obtener_por_nombre(nombre.lower())
+        if ingrediente is None:
+            raise ValueError("No existe un ingrediente con ese nombre")
+        
+        if cantidad <= 0:
+            raise ValueError("No se puede reponer una cantidad negativa.")
+        else:
+            ingrediente._stock += cantidad
+
+    # Decrementa el stock de ingrediente en una cantidad específica
+    def consumir(self, nombre, cantidad):
+        ingrediente = self.obtener_por_nombre(nombre.lower())
+        if ingrediente is None:
+            raise ValueError("No existe un ingrediente con ese nombre")
+        #ingrediente.consumir(cantidad)
+
+        if cantidad > ingrediente.stock:
+            raise ValueError("No se puede consumir: no hay suficiente stock.")
+        else:
+            ingrediente.stock -= cantidad
     
     # Elimina un ingrediente de la lista
-    def eliminar_por_nombre(self, nombre):
+    def eliminar(self, nombre):
+        if self.obtener_por_nombre(nombre.lower()) is None:
+            raise ValueError("El ingrediente no existe.")
         self._ingredientes.pop(nombre.lower())
 
     # Muestra todos los ingredientes que existen actualmente en la lista
-    def lista_ingredientes(self):
-        return [(ingrediente.nombre(), ingrediente.precio(), ingrediente.stock() ) for ingrediente in self._ingredientes.values()]
+    def listar(self):
+        if not self._ingredientes:
+            return "(No hay ingredientes registrados)"
+        return sorted([(ingrediente.nombre, ingrediente.precio, ingrediente.stock ) for ingrediente in self._ingredientes.values()])

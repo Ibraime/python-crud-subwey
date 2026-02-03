@@ -7,13 +7,13 @@ Aquí se incluyen:
 ---
 
 ## Datos precargados
-La funcion `crear_repositorio_con_datos()` carga:
-- A1: Agua (1.00, 10)
-- A2: Papas (1.50, 8)
-- D1: Refresco con descuento (2.50, 5, 20%)
+La función `crear_ingredientes_iniciales()` de repositorio_ingrediente  carga:
+- aguacate: 7.00 €, 8 unidades
+- queso 2.00 €, 42 unidades
+- tomate 3.00 €, 20 unidades
 
 ## Modificar datos
-Editar `infrastructure/datos_iniciales.py` para:
+Editar `entidades/repositorio_ingrediente.py` en el archivo anterior para:
 - Cambiar nombres/precios.
 - Ajustar cantidades.
-- Agregar nuevos items o descuentos.
+- Agregar nuevos ingredientes.
