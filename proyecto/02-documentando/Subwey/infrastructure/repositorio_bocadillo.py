@@ -4,6 +4,7 @@
 # infrastructure/repositorio_bocadillo.py
 
 from Subwey.domain.bocadillo import Bocadillo
+from Subwey.domain.bocadillo import BocadilloPromocion
 
 # Crea 2 bocadillos por defecto usando los ingredientes por defecto.
 def crear_bocadillos_iniciales(repo_ingrediente):
@@ -31,17 +32,18 @@ class RepositorioBocadillo:
         self._bocadillos = crear_bocadillos_iniciales(repo_ingrediente)
 
     # Añade un bocadillo a la lista
-    def guardar(self, nombre, ingredientes):
-
+    def guardar(self, nombre, ingredientes, descuento=None):
         nombre = nombre.strip().lower()
-
         if nombre in self._bocadillos:
             raise ValueError("Ya existe un bocadillo con ese nombre.")
 
-        bocadillo = Bocadillo(nombre, ingredientes)
+        if descuento is not None:
+            bocadillo = BocadilloPromocion(nombre, ingredientes, descuento)
+        else:
+            from Subwey.domain.bocadillo import Bocadillo
+            bocadillo = Bocadillo(nombre, ingredientes)
 
         self._bocadillos[nombre] = bocadillo
-
         return bocadillo
     
     # Obtiene el bocadillo correspondiente al nombre
