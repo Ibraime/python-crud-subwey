@@ -27,3 +27,7 @@ class ServicioIngrediente:
     # Muestra todos los ingredientes que existen actualmente en la lista
     def listar_ingredientes(self):
         return self._repo.listar()
+
+    # Obtiene el ingrediente correspondiente al nombre
+    def buscar_por_nombre(self, nombre: str):
+        return self._repo.obtener_por_nombre(nombre)

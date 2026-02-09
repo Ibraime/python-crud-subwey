@@ -1,6 +1,5 @@
 # infrastructure/repositorio_ingrediente.py
-# Se encarga de la persistencia y gestión de los datos de los ingredientes.
-# No verifica nada salvo obtener_por_nombre(), de eso se encargará el servicio
+# Se encarga de la persistencia, gestión y verificación de los datos de los ingredientes.
 from Subwey.domain.ingrediente import Ingrediente
 
 # Crea 3 ingredientes por defecto cuando se ejecuta el programa, para que sea más fácil probar
@@ -31,10 +30,10 @@ class RepositorioIngrediente:
 
     # Obtiene un ingrediente en específico por su nombre
     def obtener_por_nombre(self, nombre):
-        nombre = nombre.strip()
+        nombre = nombre.strip().lower()
 
         if nombre.lower() in self._ingredientes.keys():
-            return self._ingredientes[nombre.lower()]
+            return self._ingredientes[nombre]
         else:
             return None
 

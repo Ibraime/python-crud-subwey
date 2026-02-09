@@ -5,6 +5,9 @@
 from Subwey.application.servicios_ingrediente import ServicioIngrediente
 from Subwey.infrastructure.repositorio_ingrediente import RepositorioIngrediente
 
+from Subwey.infrastructure.repositorio_bocadillo import RepositorioBocadillo
+from Subwey.application.servicios_bocadillo import ServicioBocadillo
+
 from Subwey.presentation.menu_bocadillos import main_bocadillos 
 
 def mostrar_menu():
@@ -21,6 +24,10 @@ def main():
     # Inicializa el repositorio y servicio
     repo = RepositorioIngrediente()
     servicio = ServicioIngrediente(repo)
+
+    # También los de bocadillo para que al salir y entrar a ese segundo menú se mantengan los datos
+    repo_bocadillo = RepositorioBocadillo(repo)
+    servicio_bocadillo = ServicioBocadillo(repo_bocadillo)
     while True:
         mostrar_menu()
         opcion = input("Elige una opción: ").strip()
@@ -64,7 +71,7 @@ def main():
             # 6. Cambia al menú de bocadillos
             elif opcion == "6":
                 print("Cambiando al menú de bocadillos...")
-                main_bocadillos() 
+                main_bocadillos(servicio, servicio_bocadillo) 
             # 12. Sale del menú finalizando el programa
             elif opcion == "7":
                 print("Saliendo del programa.")

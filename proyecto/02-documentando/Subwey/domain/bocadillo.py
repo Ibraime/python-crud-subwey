@@ -1,12 +1,12 @@
 # domain/bocadillo.py
 
 from Subwey.domain.ingrediente import Ingrediente
+
 class Bocadillo:
 
     def __init__(self, nombre, ingredientes):
-        self._nombre = nombre
-        self._ingredientes = {}
-        self._precio = 0
+        self.nombre = nombre
+        self.ingredientes = ingredientes
 
     @property
     def nombre(self):
@@ -14,10 +14,9 @@ class Bocadillo:
     
     @nombre.setter
     def nombre(self, valor):
-        # validar no vacio y sin espacios laterales
         texto = (valor or "").strip()
         if not texto:
-            raise ValueError("El nombre no puede estar vacio.")
+            raise ValueError("El nombre no puede estar vacío.")
         self._nombre = texto
 
     @property
@@ -26,21 +25,23 @@ class Bocadillo:
     
     @ingredientes.setter
     def ingredientes(self, valor):
-        # validar que el diccionario no esté vacío
-        lista = (valor or "").strip()
-        if not lista:
-            raise ValueError("No se puede hacer un bocadillo sin ingredientes.")
+
+        if not isinstance(valor, list):
+            raise TypeError("Los ingredientes deben ser una lista.")
+
+        if not valor:
+            raise ValueError("El bocadillo debe tener al menos un ingrediente.")
+
+        for ingrediente in valor:
+            if not isinstance(ingrediente, Ingrediente):
+                raise TypeError("Todos los elementos deben ser objetos tipo Ingrediente.")
+
+        # evitar repetidos
+        if len(valor) != len(set(valor)):
+            raise ValueError("No se permiten ingredientes repetidos.")
+
         self._ingredientes = valor
 
     @property
     def precio(self):
-        return self._precio
-
-    @precio.setter
-    def precio(self, valor):
-        # validar precio > 0
-        if valor <= 0:
-            raise ValueError("El precio no puede ser menor que cero.")
-
-    def disponible(self):
-         return "Agotado" if self._stock == 0 else "Disponible"
+        return sum(ingrediente.precio for ingrediente in self._ingredientes)

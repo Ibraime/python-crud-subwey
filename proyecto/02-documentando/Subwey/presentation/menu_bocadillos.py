@@ -1,72 +1,120 @@
 # presentation/menu_bocadillos.py
 # Maneja la interacción con el usuario mediante un menú en consola.
-# Es el archivo que hay que ejecutar por ahora para que funcione el programa
-# Altera la lista de ingredientes con el servicio_ingredientes que a su vez llama a repositorio_ingrediente cuando es necesario
-from Subwey.application.servicios_ingrediente import ServicioIngrediente
-from Subwey.infrastructure.repositorio_ingrediente import RepositorioIngrediente
+# Se accede a él desde el menú de ingredientes
+# presentation/menu_bocadillos.py
 
 def mostrar_menu():
     print("\n=== SUBWEY (bocadillos) ===")
     print("1. Registrar bocadillo")
-    print("2. Modificar bocadillo")
-    print("4. Eliminar bocadillo")
-    print("5. Listar bocadillos")
-    print("6. Volver a ingredientes")
+    print("2. Modificar ingredientes del bocadillo")
+    print("3. Eliminar bocadillo")
+    print("4. Listar bocadillos")
+    print("5. Volver a ingredientes")
 
-def main_bocadillos():
-    # Inicializa el repositorio y servicio
-    repo = RepositorioIngrediente()
-    servicio = ServicioIngrediente(repo)
+# Para modificar y crear bocadillos se eligen los ingredientes que tendrá, sin repetirlos
+def elegir_ingredientes(servicio_ingrediente):
+
+    ingredientes_disponibles = servicio_ingrediente.listar_ingredientes()
+
+    if not isinstance(ingredientes_disponibles, list) or not ingredientes_disponibles:
+        print("No hay ingredientes disponibles.")
+        return []
+
+    print("\nIngredientes disponibles:")
+    for nombre, precio, stock in ingredientes_disponibles:
+        print(f"{nombre:<10} - {precio:<5.2f}€ - {stock:<5.2f} unidades")
+
+    seleccionados = []
+
+    while True:
+        nombre_ing = input("\nIngrediente (o 'fin'): ").strip()
+
+        if nombre_ing.lower() == "fin":
+            break
+
+        ingrediente = servicio_ingrediente.buscar_por_nombre(nombre_ing)
+
+        if not ingrediente:
+            print("X Ingrediente no encontrado.")
+            continue
+
+        if ingrediente in seleccionados:
+            print("X Ya añadido.")
+            continue
+
+        seleccionados.append(ingrediente)
+        print(f"✔ {nombre_ing} añadido.")
+
+    return seleccionados
+
+
+def main_bocadillos(servicio_ingrediente, servicio_bocadillo):
+
     while True:
         mostrar_menu()
         opcion = input("Elige una opción: ").strip()
+
         try:
-            # 1. Pide los datos mínimos y crea un ingrediente
+
+            # 1. Crear Bocadillo
             if opcion == "1":
-                nombre = input("Nombre del ingrediente: ").strip()
-                precio = float(input("Precio: ").strip())
-                stock = input("Stock: ").strip()
-                if not stock:
-                    stock = 0
-                servicio.registrar_ingrediente(nombre,precio,float(stock))
-                print("✔ Ingrediente registrado correctamente.")
-            # 2. Especifica que nombre de ingrediente y cantidad para decrementar el stock
+
+                nombre = input("Nombre del bocadillo: ").strip()
+                ingredientes = elegir_ingredientes(servicio_ingrediente)
+
+                if not ingredientes:
+                    print("X No puede crearse sin ingredientes.")
+                    continue
+
+                bocadillo = servicio_bocadillo.crear_bocadillo(nombre, ingredientes)
+
+                print(f"✔ Bocadillo '{bocadillo.nombre}' creado.")
+                print(f"Precio total: {bocadillo.precio:.2f}€")
+
+            # 2. Modificar ingredientes del bocadillo
             elif opcion == "2":
-                nombre = input("Nombre del ingrediente: ").strip()
-                cantidad = float(input("Cantidad a consumir: ").strip())
-                servicio.consumir_ingrediente(nombre, cantidad)
-                print(f"✔ Se consumió el {nombre}")
-            # 3. Especifica que nombre de ingrediente y cantidad para aumentar el stock
+
+                nombre = input("Nombre del bocadillo a modificar: ").strip()
+                ingredientes = elegir_ingredientes(servicio_ingrediente)
+
+                if not ingredientes:
+                    print("X No puede quedar sin ingredientes.")
+                    continue
+
+                boc = servicio_bocadillo.modificar_bocadillo(nombre, ingredientes)
+
+                print(f"✔ Bocadillo modificado.")
+                print(f"Nuevo precio: {boc.precio:.2f}€")
+
+            # 3. Eliminar bocadillo
             elif opcion == "3":
-                nombre = input("Nombre del ingrediente: ").strip()
-                cantidad = int(input("Cantidad a reponer: ").strip())
-                servicio.reponer_ingrediente(nombre, cantidad)
-                print(f"✔ Se añadió stock de {nombre}")
-            # 4. Especifica que nombre de ingrediente para eliminarlo 
+
+                nombre = input("Nombre del bocadillo a eliminar: ").strip()
+                servicio_bocadillo.eliminar_bocadillo(nombre)
+
+                print("✔ Bocadillo eliminado.")
+
+            # 4. Listar bocadillos
             elif opcion == "4":
-                nombre = input("Nombre del ingrediente: ").strip()
-                servicio.eliminar_ingrediente(nombre)
-                print(f"✔ Se eliminó el {nombre}")
-            # 5. Muestra la lista de ingredientes, en caso de que no haya ninguno da un aviso
+
+                bocadillos = servicio_bocadillo.listar_bocadillos()
+
+                if isinstance(bocadillos, str):
+                    print(bocadillos)
+                    continue
+
+                print("\nListado de bocadillos:")
+                for b in bocadillos:
+                    nombres = [i.nombre for i in b.ingredientes]
+                    print(f"{b.nombre:<15} - {b.precio:<5.2f}€ - {', '.join(nombres)}")
+
+            # 5. Volver al menú de ingredientes
             elif opcion == "5":
-                ingredientes = servicio.listar_ingredientes()
-                if isinstance(ingredientes, list):
-                    print("\nListado de ingredientes:")
-                    print("")
-                    for nombre, precio, stock in ingredientes:
-                        print(f"{nombre:<10} - {precio:<5.2f}€ - {stock:<5.2f} unidades")
-                else:
-                    print(ingredientes)
-            # 12. Sale del menú finalizando el programa
-            elif opcion == "6":
-                print("Saliendo del menú de bocadillos.")
+                print("Volviendo al menú anterior.")
                 break
-            # Si escribe una opción no válida, avisa al usuario y vuelve al bucle
+
             else:
                 print("Opción no válida.")
-        # Si ocurre algún error se muestra al usuario con una X a la izquierda
+
         except ValueError as e:
             print("X " + str(e))
-
-if __name__ == "__main__":
-    main_bocadillos()
