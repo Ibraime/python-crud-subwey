@@ -1,6 +1,6 @@
 # domain/bocadillo.py
 
-from Subwey.entidades.ingrediente import Ingrediente
+from Subwey.domain.ingrediente import Ingrediente
 class Bocadillo:
 
     def __init__(self, nombre, ingredientes):

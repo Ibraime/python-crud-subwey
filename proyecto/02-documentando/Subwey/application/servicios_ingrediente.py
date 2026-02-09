@@ -1,8 +1,8 @@
 # application/servicios_ingrediente.py
 # Implementa la lógica del programa, coordinando las operaciones entre el frontend y el backend. (El menú y el repositorio)
 # Verifica que las variables están en un formato correcto y si no hay errores llama al repositorio para manejar la base de datos
-from Subwey.entidades.ingrediente import Ingrediente
-from Subwey.backend.repositorio_ingrediente import RepositorioIngrediente
+from Subwey.domain.ingrediente import Ingrediente
+from Subwey.infrastructure.repositorio_ingrediente import RepositorioIngrediente
 
 class ServicioIngrediente:
     def __init__(self, repo):

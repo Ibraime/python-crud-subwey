@@ -1,7 +1,7 @@
-# infrastructure/repositorio_memoria.py
+# infrastructure/repositorio_ingrediente.py
 # Se encarga de la persistencia y gestión de los datos de los ingredientes.
 # No verifica nada salvo obtener_por_nombre(), de eso se encargará el servicio
-from Subwey.entidades.ingrediente import Ingrediente
+from Subwey.domain.ingrediente import Ingrediente
 
 # Crea 3 ingredientes por defecto cuando se ejecuta el programa, para que sea más fácil probar
 def crear_ingredientes_iniciales():
@@ -36,7 +36,7 @@ class RepositorioIngrediente:
         if nombre.lower() in self._ingredientes.keys():
             return self._ingredientes[nombre.lower()]
         else:
-            raise ValueError("El producto no existe.")
+            return None
 
     # Aumenta el stock de ingrediente en una cantidad específica
     def reponer(self, nombre, cantidad):
@@ -59,7 +59,7 @@ class RepositorioIngrediente:
         if cantidad > ingrediente.stock:
             raise ValueError("No se puede consumir: no hay suficiente stock.")
         else:
-            ingrediente.stock -= cantidad
+            ingrediente._stock -= cantidad
     
     # Elimina un ingrediente de la lista
     def eliminar(self, nombre):

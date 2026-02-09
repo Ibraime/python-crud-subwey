@@ -2,10 +2,10 @@
 # Maneja la interacción con el usuario mediante un menú en consola.
 # Es el archivo que hay que ejecutar por ahora para que funcione el programa
 # Altera la lista de ingredientes con el servicio_ingredientes que a su vez llama a repositorio_ingrediente cuando es necesario
-from Subwey.servicios.servicios_ingrediente import ServicioIngrediente
-from Subwey.backend.repositorio_ingrediente import RepositorioIngrediente
+from Subwey.application.servicios_ingrediente import ServicioIngrediente
+from Subwey.infrastructure.repositorio_ingrediente import RepositorioIngrediente
 
-from Subwey.frontend.menu_bocadillos import main_bocadillos 
+from Subwey.presentation.menu_bocadillos import main_bocadillos 
 
 def mostrar_menu():
     print("\n=== SUBWEY (ingredientes) ===")
