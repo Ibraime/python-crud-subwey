@@ -9,7 +9,7 @@ Este documento debería incluir:
 ---
 
 ## Descripcion funcional
-La aplicacion simula una maquina expendedora con un menu de consola. Permite listar productos, seleccionar un producto, insertar dinero, comprar, cancelar, reponer stock y agregar productos con descuento.
+La aplicacion simula un restaurante de bocadillos personalizados con un menu de consola. Permite listar ingredientes, añadir nuevos, reponer stock y crear bocadillos con los ingredientes.
 
 ## Objetivos de la fase
 - Practicar la separacion por capas (presentation, application, domain, infrastructure).
@@ -19,18 +19,18 @@ La aplicacion simula una maquina expendedora con un menu de consola. Permite lis
 
 ## Alcance
 Incluye:
-- Menu de consola (`presentation/menu.py`).
-- Servicio de aplicacion (`application/servicios.py`).
-- Entidades y reglas del dominio (`domain/item.py`, `domain/maquina.py`).
+- Menus de consola (`presentation/menu_ingredientes.py`), (`presentation/menu_bocadillo.py`).
+- Servicios de aplicacion (`application/servicios_ingrediente.py`), (`application/servicios_bocadillo.py`).
+- Entidades y reglas del dominio (`domain/ingrediente.py`, `domain/bocadillo.py`, `domain/usuario.py`).
 - Repositorio en memoria y datos iniciales (`infrastructure/`).
 - Tests de comprobacion por pasos (`test_*.py`).
 
 No incluye:
 - Persistencia real (BD/archivos), interfaz grafica, pagos reales, autenticacion.
-- Gestión de monedas/billetes con inventario.
-- Concurrencia o multiples usuarios.
+- Gestión de dinero ni carro de la compra.
+- Login y registro real de usuarios.
 
 ## Supuestos y limites
-- Precios y saldo en euros (float).
-- Codigo de producto con letra + numero (ej. A1).
+- Precios en euros (float).
+- Nombre únicos para ingredientes y bocadillos.
 - Stock entero >= 0.

@@ -9,19 +9,18 @@ Este documento debería incluir:
 El proyecto ha sido estructurado usando el diseño por capas.
 
 ## Capas y responsabilidades
-- frontend: entrada/salida por consola. No contiene reglas de negocio.
-- servicios: orquesta casos de uso sobre el dominio, validaciones.
-- entidades: Las distintas entidades.
-- backend: repositorios concretos y datos iniciales.
+- presentation: entrada/salida por consola. No contiene reglas de negocio.
+- application: orquesta casos de uso sobre el dominio.
+- domain: Las distintas entidades.
+- infrastructure: repositorios concretos, validaciones y datos iniciales.
 
 ## Dependencias permitidas
-- frontend -> servicios -> backend
-- backend -> entidades
+- presentation -> application -> infrastructure
+- infrastructure -> domain
 
-No se debe depender de frontend desde entidades ni servicios.
+No se debe depender de presentation desde domain ni application.
 
 ## Mapa de archivos
-- `frontend/menu_ingredientes.py`: UI de consola.
-- `servicios/servicios_ingrediente.py`: casos de uso.
-- `entidades/ingrediente.py`, `backend/repositorio_ingredientes.py`: nucleo.
-- `servicios/servicios_ingrediente.py`: adaptadores.
+- `presentation/menu_ingredientes.py`, `presentation/menu_bocadillo.py`: UI de consola.
+- `domain/ingrediente.py`, `infrastructure/repositorio_ingredientes.py`: nucleo.
+- `application/servicios_ingrediente.py`, `application/servicios_bocadillo.py`: adaptadores.

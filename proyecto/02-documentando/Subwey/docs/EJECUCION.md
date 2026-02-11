@@ -8,20 +8,19 @@ Este documento debería incluir:
 
 ## Requisitos
 - Python 3.10+.
-- Ejecutar desde la raiz del paquete `expendedora/`.
+- Ejecutar desde la raiz del paquete `02-documentando/` o la carpeta del mismo tipo correspondiente.
 
 ## Ejecutar el menu
 ```bash
-python -m expendedora.presentation.menu
+python -m Subwey.presentation.menu_ingredientes
 ```
 
 ## Flujo rapido de ejemplo
-1. Opcion 1: Mostrar productos.
-2. Opcion 2: Seleccionar producto (ej. A1).
-3. Opcion 3: Insertar dinero (ej. 2.00).
-4. Opcion 4: Comprar.
+1. Opcion 6: Menú bocadillos.
+2. Opcion 1: Registrar bocadillo.
+3. Opcion 4: Listar bocadillos.
 
 ## Errores comunes
-- "El codigo no existe." si se selecciona un codigo inexistente.
-- "Saldo insuficiente" si no se inserta dinero suficiente.
+- "El ingrediente/bocadillo no existe." si se selecciona un nombre inexistente.
+- "Stock insuficiente" si se intenta consumir una cantidad de ingrediente superior de la que hay.
 - "No hay stock disponible" si la cantidad es 0.
