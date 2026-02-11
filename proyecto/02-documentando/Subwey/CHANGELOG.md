@@ -28,9 +28,9 @@ Versión disponible en la subcarpeta `01-capas`
 
 ### Added
 - Aplicación base de máquina expendedora por capas:
-  - Menú de consola en `frontend/`.
-  - Servicios/casos de uso en `servicios/`.
-  - Entidades y reglas de negocio en `entidades/` (ingredientes, consumir/reponer, stock).
-  - Repositorio en memoria y datos iniciales en `backend/`.
+  - Menú de consola en `presentation/`.
+  - Servicios/casos de uso en `application/`.
+  - Entidades y reglas de negocio en `domain/` (ingredientes, bocadillos y usuario).
+  - Repositorio en memoria y datos iniciales en `infrastructure/`.
 - Tests aún en desarrollo
 

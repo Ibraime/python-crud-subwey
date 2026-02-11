@@ -19,17 +19,27 @@ La aplicación implementa operaciones **CRUD** (Crear, Leer, Actualizar y Elimin
 - **Registrar ingrediente**  
   Permite añadir un nuevo ingrediente indicando su nombre, precio y cantidad inicial.
 
+- **Registrar bocadillo**  
+  Permite crear un bocadillo indicando su nombre, lista de ingredientes y su autor (el precio se calcula con la suma de los ingredientes).
+
 - **Consumir ingrediente**  
   Reduce la cantidad disponible de un ingrediente cuando se utiliza en una preparación.
 
 - **Reponer ingrediente**  
   Incrementa el stock de un ingrediente existente.
 
-- **Eliminar ingrediente**  
-  Elimina completamente un ingrediente del sistema.
+- **Modificar ingredientes del bocadillo**  
+  Como su nombre indica permite cambiar los ingredientes del bocadillo, borra los que tiene y empiezas a elegir de 0, si cancelas se
+  queda como estaba.
+
+- **Eliminar ingrediente/bocadillo**  
+  Elimina un ingrediente/bocadillo de la lista.
 
 - **Listar ingredientes**  
   Muestra todos los ingredientes registrados junto con su precio y cantidad actual. (Por defecto se crean 3 ingredientes, para probar más rápido)
+
+- **Listar bocadillos**  
+  Muestra todos los bocadillos registrados junto con su precio final, ingredientes y autor. (Por defecto se crean 2 bocadillos, para probar más rápido)
 
 ---
 
@@ -38,19 +48,20 @@ La aplicación implementa operaciones **CRUD** (Crear, Leer, Actualizar y Elimin
 Para ejecutar la aplicación desde la raíz del proyecto (En este caso desde la carpeta 01-capas):
 
 ```bash
-python -m Subwey.frontend.menu_ingredientes
+python -m Subwey.presentation.menu_ingredientes
 ```
 
 ### Ejemplo salida del programa
 
 ```text
-=== SUBWEY ===
+=== SUBWEY (ingredientes) ===
 1. Registrar ingrediente
 2. Consumir ingrediente
 3. Reponer ingrediente
 4. Eliminar ingrediente
 5. Listar ingredientes
-6. Salir
+6. Menú de bocadillos
+7. Salir
 Elige una opción: 5
 
 Listado de ingredientes:
@@ -60,6 +71,20 @@ queso      - 2.00 € - 42.00 unidades
 tomate     - 3.00 € - 20.00 unidades
 ```
 
+```text
+=== SUBWEY (bocadillos) ===
+1. Registrar bocadillo
+2. Modificar ingredientes del bocadillo
+3. Eliminar bocadillo
+4. Listar bocadillos
+5. Volver a ingredientes
+Elige una opción: 4
+
+Listado de bocadillos:
+              caprese          - 5.00 € - tomate, queso - Autor: Anónimo
+              vegetal          - 10.00€ - tomate, aguacate - Autor: Anónimo
+```
+
 ---
 
 ## 🗂️ Estructura del proyecto
@@ -67,33 +92,38 @@ tomate     - 3.00 € - 20.00 unidades
 ```text
 proyecto/
 ├── Subwey/
-│   ├── backend/
+│   ├── infrastructure/
 │   │   └── __init__.py
 │   │   └── repositorio_ingrediente.py
-│   ├── entidades/
+│   │   └── repositorio_bocadillo.py
+│   ├── domain/
 │   │   └── __init__.py
 │   │   └── ingrediente.py
-│   ├── frontend/
+│   │   └── bocadillo.py
+│   │   └── usuario.py
+│   ├── presentation/
 │   │   └── __init__.py
 │   │   └── menu_ingredientes.py
-│   ├── servicios/
-│   │   └── __init__.py
-│   │   └── servicios_ingrediente.py
+│   │   └── menu_bocadillos.py
+│   └── application/
+│       └── __init__.py
+│       └── servicios_ingrediente.py
+│       └── servicios_bocadillo.py
 └── README.md
 ```
 
 ### Descripción de carpetas
 
-- **backend/**  
-  Se encarga de la persistencia y gestión de los datos de los ingredientes.
+- **infrastructure/**  
+  Se encarga de la persistencia, gestión y verificación de los datos de los ingredientes y bocadillos.
 
-- **entidades/**  
-  Contiene las entidades de la base de datos, como `Ingrediente`, que es la base del sistema que usamos como ejemplo en esta ocasión.
+- **domain/**  
+  Contiene las entidades de la base de datos, como `Ingrediente`, `Bocadillo` y `Usuario`, son la base del sistema que usamos como ejemplo (Sin incluir cesta de la compra y demás).
 
-- **frontend/**  
-  Maneja la interacción con el usuario mediante un menú en consola.
+- **presentation/**  
+  Maneja la interacción con el usuario mediante dos menús en consola que se conectan entre ellos.
 
-- **servicios/**  
-  Implementa la lógica del programa, coordinando las operaciones entre el frontend y el backend.
+- **application/**  
+  Implementa la lógica del programa, coordinando las operaciones entre el presentation e infrastructure.
 
 ---
