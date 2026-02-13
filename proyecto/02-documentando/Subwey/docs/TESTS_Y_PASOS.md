@@ -1,7 +1,7 @@
 # Tests y pasos
 
 Aquí se incluye como ejecutar los tests de la aplicación y que valida cada uno.
-
+(TODO cuando hayan tests)
 ---
 
 ## Ejecucion de pruebas

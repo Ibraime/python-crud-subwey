@@ -1,4 +1,4 @@
-# Documentacion de la fase 02 - Expendedora
+# Documentacion de la fase 02 - Subwey
 
 Indice rapido:
 - [DESCRIPCION_Y_ALCANCE.md](DESCRIPCION_Y_ALCANCE.md)

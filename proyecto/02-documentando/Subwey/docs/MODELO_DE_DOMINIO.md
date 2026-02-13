@@ -1,6 +1,6 @@
 # Modelo de dominio
 
-Auí se incluyen:
+Aquí se incluyen:
 
 - Las entidades principales del proyecto
 - Invariates: condiciones que siempre deben cumplirse para que una entidad del dominio sea válida, antes y después de cualquier operación
@@ -9,15 +9,16 @@ Auí se incluyen:
 ---
 
 ## Entidades
-- `Item`: producto con codigo, nombre, precio y cantidad.
-- `ItemConDescuento`: item con porcentaje de descuento y precio final calculado.
-- `MaquinaExpendedora`: coordina seleccion, saldo y compra.
+- `Ingrediente`: ingrediente con nombre, precio y cantidad.
+- `Bocadillo`: bocadillo con nombre, ingredientes, autor y precio final calculado.
+- `BocadilloPromocion`: bocadillo con porcentaje de descuento.
+- `Usuario`: Usuario con nombre.
 
 ### Invariantes
-- No puede haber items con codigo duplicado en el repositorio.
+- No puede haber ingredientes, bocadillos o usuarios con nombre duplicado en el repositorio.
 - Cantidad siempre entero >= 0.
 - Precio siempre > 0.
 
 ### Colaboraciones
-- MaquinaExpendedora usa un repositorio con operaciones guardar/obtener/listar (y eliminar en memoria).
-- ServicioExpendedora orquesta casos de uso y delega en MaquinaExpendedora.
+- Usan unos repositorios con operaciones guardar/obtener/listar (y eliminar en memoria).
+- Los servicios orquestan casos de uso y delegan en los repositorios.

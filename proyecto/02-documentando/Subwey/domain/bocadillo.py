@@ -15,6 +15,7 @@ class Bocadillo:
     @nombre.setter
     def nombre(self, valor):
         texto = (valor or "").strip()
+        # validar que el nombre no está vacío
         if not texto:
             raise ValueError("El nombre no puede estar vacío.")
         self._nombre = texto
@@ -25,13 +26,13 @@ class Bocadillo:
     
     @ingredientes.setter
     def ingredientes(self, valor):
-
+        # validar que es una lista
         if not isinstance(valor, list):
             raise TypeError("Los ingredientes deben ser una lista.")
-
+        # validar que la lista no está vacía
         if not valor:
             raise ValueError("El bocadillo debe tener al menos un ingrediente.")
-
+        # validar que todos los elementos son ingredientes
         for ingrediente in valor:
             if not isinstance(ingrediente, Ingrediente):
                 raise TypeError("Todos los elementos deben ser objetos tipo Ingrediente.")
