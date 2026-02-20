@@ -56,7 +56,7 @@ En el archivo `presentation/menu_bocadillos.py` debería ser solo interfaz de us
 - Desde presentación no se debería modificar atributos del dominio (`boc.autor = autor` línea 99).
 - Desde presentación no se debería comprobar si un objeto es de una clase del dominio `isinstance(bocadillo, BocadilloPromocion)` línea 145. 
 
-**La idea es que desde la capa de presentación:
+**La idea es que desde la capa de presentación**:
    - solo recoge datos crudos: `nombre`, `ids/nombres ingredientes`, `autor_nombre`, `descuento_opcional`
    - llama a métodos de `ServicioBocadillo`
    - muestra resultados ya **listos para mostrar**
