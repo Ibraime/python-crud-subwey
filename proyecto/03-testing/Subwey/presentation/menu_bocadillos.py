@@ -3,16 +3,6 @@
 # Se accede a él desde el menú de ingredientes
 # presentation/menu_bocadillos.py
 
-from Subwey.domain.usuario import Usuario
-from Subwey.domain.bocadillo import BocadilloPromocion
-
-USUARIOS_PREDETERMINADOS = [
-    Usuario("Anónimo"),
-    Usuario("Oficial"),
-    Usuario("usuario_test")
-]
-
-
 def mostrar_menu():
     print("\n=== SUBWEY (bocadillos) ===")
     print("1. Registrar bocadillo")
@@ -82,6 +72,7 @@ def main_bocadillos(servicio_ingrediente, servicio_bocadillo):
                     continue
 
                 autor_nombre = input("Elige el autor (Oficial - usuario_test - Anónimo): ").strip() or "Anónimo"
+                USUARIOS_PREDETERMINADOS = servicio_bocadillo.obtener_usuarios_iniciales()
 
                 autor = next(
                     (usuario for usuario in USUARIOS_PREDETERMINADOS if usuario.nombre.lower() == autor_nombre.lower()),
@@ -95,8 +86,7 @@ def main_bocadillos(servicio_ingrediente, servicio_bocadillo):
                     descuento = float(input("Introduce el porcentaje descuento (0-90)%: ").strip())
 
                 # Crear bocadillo usando el servicio
-                boc = servicio_bocadillo.crear_bocadillo(nombre, ingredientes, descuento)
-                boc.autor = autor
+                boc = servicio_bocadillo.crear_bocadillo(nombre, ingredientes, descuento, autor)
 
                 print(f"✔ Bocadillo '{boc.nombre}' creado por {autor.nombre}.")
                 print(f"Precio total: {boc.precio:.2f}€")
@@ -142,7 +132,7 @@ def main_bocadillos(servicio_ingrediente, servicio_bocadillo):
                     ingredientes = [i.nombre for i in bocadillo.ingredientes]
                     autor = getattr(bocadillo, "autor", "Anónimo")
 
-                    if isinstance(bocadillo, BocadilloPromocion):
+                    if servicio_bocadillo.es_promocional(bocadillo.nombre):
                         promo_mark = f"[PROMO {bocadillo.descuento}%] "
                     else:
                         # Espacio en blanco para mantener alineación con los que no tienen promo

@@ -4,7 +4,6 @@ from Subwey.domain.ingrediente import Ingrediente
 
 # Crea 3 ingredientes por defecto cuando se ejecuta el programa, para que sea más fácil probar
 def crear_ingredientes_iniciales():
-    """Devuelve una lista de items iniciales para la maquina."""
     return {
         "tomate":Ingrediente("tomate", 3, 20),
         "aguacate":Ingrediente("aguacate", 7, 8),

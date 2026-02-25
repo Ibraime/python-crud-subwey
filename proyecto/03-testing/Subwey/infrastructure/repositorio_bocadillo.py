@@ -5,6 +5,7 @@
 
 from Subwey.domain.bocadillo import Bocadillo
 from Subwey.domain.bocadillo import BocadilloPromocion
+from Subwey.domain.usuario import Usuario
 
 # Crea 2 bocadillos por defecto usando los ingredientes por defecto.
 def crear_bocadillos_iniciales(repo_ingrediente):
@@ -32,15 +33,15 @@ class RepositorioBocadillo:
         self._bocadillos = crear_bocadillos_iniciales(repo_ingrediente)
 
     # Añade un bocadillo a la lista
-    def guardar(self, nombre, ingredientes, descuento=None):
+    def guardar(self, nombre, ingredientes, descuento=None, autor="Anónimo"):
         nombre = nombre.strip().lower()
         if nombre in self._bocadillos:
             raise ValueError("Ya existe un bocadillo con ese nombre.")
 
         if descuento is not None:
-            bocadillo = BocadilloPromocion(nombre, ingredientes, descuento)
+            bocadillo = BocadilloPromocion(nombre, ingredientes, descuento, autor)
         else:
-            bocadillo = Bocadillo(nombre, ingredientes)
+            bocadillo = Bocadillo(nombre, ingredientes, autor)
 
         self._bocadillos[nombre] = bocadillo
         return bocadillo
@@ -81,3 +82,20 @@ class RepositorioBocadillo:
             return "(No hay bocadillos registrados)"
 
         return sorted(self._bocadillos.values(), key=lambda b: b.nombre)
+    
+    # Comprueba si el bocadillo es promocional
+    def es_promocional(self, nombre):
+        bocadillo = self.obtener_por_nombre(nombre)
+
+        if bocadillo and bocadillo.es_promocional():
+            return True
+        else:
+            return False
+    
+    # Crea 3 usuarios por defecto, no haría un repositorio_usuario aún solo para esto
+    def crear_usuarios_iniciales(self):
+        return [
+            Usuario("Anónimo"),
+            Usuario("Oficial"),
+            Usuario("usuario_test")
+        ]

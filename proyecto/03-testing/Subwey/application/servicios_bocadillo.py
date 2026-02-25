@@ -6,8 +6,8 @@ class ServicioBocadillo:
         self._repo = repo_bocadillo
 
     # Añade un bocadillo a la lista (con o sin descuento)
-    def crear_bocadillo(self, nombre, ingredientes, descuento=None):
-        return self._repo.guardar(nombre, ingredientes, descuento)
+    def crear_bocadillo(self, nombre, ingredientes, descuento=None, autor="Anónimo"):
+        return self._repo.guardar(nombre, ingredientes, descuento, autor)
 
     # Modifica los ingredientes del bocadillo
     def modificar_bocadillo(self, nombre, ingredientes):
@@ -24,3 +24,10 @@ class ServicioBocadillo:
     # Obtiene el bocadillo correspondiente al nombre
     def obtener_bocadillo(self, nombre):
         return self._repo.obtener_por_nombre(nombre)
+    
+    def es_promocional(self, nombre):
+        return self._repo.es_promocional(nombre)
+    
+    # Obtiene los usuarios por defecto
+    def obtener_usuarios_iniciales(self):
+        return self._repo.crear_usuarios_iniciales()
