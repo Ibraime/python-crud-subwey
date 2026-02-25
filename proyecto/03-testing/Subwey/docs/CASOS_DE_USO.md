@@ -63,7 +63,7 @@ Las opciones del menu de bocadillos son:
 - Validaciones: nombre existe, número de ingredientes distintos > 0
 - Salida: bocadillo actualizado.
 
-## 3. Eliminar ingrediente
+## 3. Eliminar bocadillo
 - Entrada: nombre.
 - Validaciones: nombre existe
 - Salida: bocadillo eliminado.

@@ -1,21 +1,30 @@
 # infrastructure/repositorio_ingrediente.py
-# Se encarga de la persistencia, gestión y verificación de los datos de los bocadillos.
+"""
+Módulo que define el repositorio de bocadillos.
 
-# infrastructure/repositorio_bocadillo.py
+Se encarga de la persistencia en memoria, creación, consulta
+y eliminación de bocadillos, incluyendo versiones promocionales.
+"""
 
-from Subwey.domain.bocadillo import Bocadillo
-from Subwey.domain.bocadillo import BocadilloPromocion
+from Subwey.domain.bocadillo import Bocadillo, BocadilloPromocion
 from Subwey.domain.usuario import Usuario
 
-# Crea 2 bocadillos por defecto usando los ingredientes por defecto.
-def crear_bocadillos_iniciales(repo_ingrediente):
 
+def crear_bocadillos_iniciales(repo_ingrediente):
+    """
+    Crea un conjunto inicial de bocadillos utilizando
+    los ingredientes disponibles en el repositorio.
+
+    :param repo_ingrediente: Repositorio de ingredientes.
+    :return: Diccionario de bocadillos indexados por nombre.
+    """
     tomate = repo_ingrediente.obtener_por_nombre("tomate")
     aguacate = repo_ingrediente.obtener_por_nombre("aguacate")
     queso = repo_ingrediente.obtener_por_nombre("queso")
 
     bocadillos = {}
 
+    # Solo se crean si los ingredientes existen en el sistema
     if tomate and aguacate:
         vegetal = Bocadillo("vegetal", [tomate, aguacate])
         bocadillos[vegetal.nombre.lower()] = vegetal
@@ -28,13 +37,36 @@ def crear_bocadillos_iniciales(repo_ingrediente):
 
 
 class RepositorioBocadillo:
+    """
+    Repositorio en memoria para la gestión de bocadillos.
+
+    Permite crear, consultar, modificar y eliminar bocadillos,
+    incluyendo versiones promocionales.
+    """
 
     def __init__(self, repo_ingrediente):
+        """
+        Inicializa el repositorio con bocadillos por defecto.
+
+        :param repo_ingrediente: Repositorio de ingredientes.
+        """
         self._bocadillos = crear_bocadillos_iniciales(repo_ingrediente)
 
-    # Añade un bocadillo a la lista
-    def guardar(self, nombre, ingredientes, descuento=None, autor="Anónimo"):
+    def guardar(self, nombre, ingredientes, descuento=None, autor=None):
+        """
+        Guarda un nuevo bocadillo en el repositorio.
+
+        Si se indica descuento, se crea como BocadilloPromocion.
+
+        :param nombre: Nombre del bocadillo.
+        :param ingredientes: Lista de ingredientes.
+        :param descuento: Porcentaje de descuento (opcional).
+        :param autor: Usuario autor (opcional).
+        :return: Bocadillo creado.
+        :raises ValueError: Si ya existe un bocadillo con ese nombre.
+        """
         nombre = nombre.strip().lower()
+
         if nombre in self._bocadillos:
             raise ValueError("Ya existe un bocadillo con ese nombre.")
 
@@ -45,29 +77,42 @@ class RepositorioBocadillo:
 
         self._bocadillos[nombre] = bocadillo
         return bocadillo
-    
-    # Obtiene el bocadillo correspondiente al nombre
+
     def obtener_por_nombre(self, nombre):
+        """
+        Obtiene un bocadillo por su nombre.
 
+        :param nombre: Nombre del bocadillo.
+        :return: Bocadillo o None si no existe.
+        """
         nombre = nombre.strip().lower()
+        return self._bocadillos.get(nombre)
 
-        if nombre in self._bocadillos:
-            return self._bocadillos[nombre]
-        return None
-    
-    # Modifica los ingredientes del bocadillo
     def modificar_ingredientes(self, nombre, ingredientes):
+        """
+        Modifica los ingredientes de un bocadillo existente.
+
+        :param nombre: Nombre del bocadillo.
+        :param ingredientes: Nueva lista de ingredientes.
+        :return: Bocadillo actualizado.
+        :raises ValueError: Si el bocadillo no existe.
+        """
         nombre = nombre.strip().lower()
         bocadillo = self._bocadillos.get(nombre)
+
         if not bocadillo:
             raise ValueError("Bocadillo no existe.")
+
         bocadillo.ingredientes = ingredientes
         return bocadillo
 
-
-    # Elimina un bocadillo de la lista
     def eliminar(self, nombre):
+        """
+        Elimina un bocadillo del repositorio.
 
+        :param nombre: Nombre del bocadillo.
+        :raises ValueError: Si el bocadillo no existe.
+        """
         nombre = nombre.strip().lower()
 
         if nombre not in self._bocadillos:
@@ -75,27 +120,32 @@ class RepositorioBocadillo:
 
         self._bocadillos.pop(nombre)
 
-    # Muestra todos los bocadillos que existen actualmente en la lista
     def listar(self):
+        """
+        Devuelve una lista ordenada de bocadillos por nombre.
 
-        if not self._bocadillos:
-            return "(No hay bocadillos registrados)"
-
+        :return: Lista de objetos Bocadillo.
+        """
         return sorted(self._bocadillos.values(), key=lambda b: b.nombre)
-    
-    # Comprueba si el bocadillo es promocional
-    def es_promocional(self, nombre):
-        bocadillo = self.obtener_por_nombre(nombre)
 
-        if bocadillo and bocadillo.es_promocional():
-            return True
-        else:
-            return False
-    
-    # Crea 3 usuarios por defecto, no haría un repositorio_usuario aún solo para esto
+    def es_promocional(self, nombre):
+        """
+        Indica si un bocadillo es promocional.
+
+        :param nombre: Nombre del bocadillo.
+        :return: True si es promocional, False en caso contrario.
+        """
+        bocadillo = self.obtener_por_nombre(nombre)
+        return bocadillo.es_promocional() if bocadillo else False
+
     def crear_usuarios_iniciales(self):
+        """
+        Crea usuarios por defecto para pruebas del sistema.
+
+        :return: Lista de objetos Usuario.
+        """
         return [
             Usuario("Anónimo"),
             Usuario("Oficial"),
-            Usuario("usuario_test")
+            Usuario("usuario_test"),
         ]

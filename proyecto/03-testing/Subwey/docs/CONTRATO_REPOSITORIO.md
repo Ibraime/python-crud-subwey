@@ -2,9 +2,10 @@
 
 Describe el contrato de RepositorioIngredientes:
 - guardar
-- obtener
+- obtener_por_nombre
 - reponer
 - consumir
+- eliminar
 - listar
 
 ---
@@ -24,21 +25,25 @@ Describe el contrato de RepositorioIngredientes:
 
 Describe el contrato de RepositorioIngredientes:
 - guardar
-- obtener
-- modificar
+- obtener_por_nombre
+- modificar_ingredientes
 - eliminar
 - listar
+- es_promocional
+- crear_usuarios_iniciales
 
 
 ---
 ## Contenido sugerido
 
 ### Contrato RepositorioIngredientes (backend)
-- `guardar(nombre, lista de ingredientes, autor)`: almacena un bocadillo (puede ser de promo si se específica).
+- `guardar(nombre, ingredientes, descuento, autor)`: almacena un bocadillo (puede ser de promo si se específica).
 - `obtener_por_nombre(nombre)`: devuelve bocadillo o `None`.
-- `modificar(nombre, lista de ingredientes)`: Cambia los ingredientes que contiene el bocadillo.
+- `modificar_ingredientes(nombre, ingredientes)`: Cambia los ingredientes que contiene el bocadillo.
 - `eliminar(nombre)`: elimina si existe; da error si no.
 - `listar()`: devuelve una lista de bocadillos.
+- `es_promocional()`: devuelve true si el bocadillo es promocional, false si no.
+- `crear_usuarios_iniciales()`: crea unos usuarios por defecto que se usarán como autores de los bocadillos.
   
 ---
 
