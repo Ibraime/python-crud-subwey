@@ -3,10 +3,35 @@
 ## Requisitos
 - Python 3.10+.
 - Ejecutar desde la raiz del paquete por encima de Subwey `02-documentando/`/'`03-testing/`' etc.
+- `coverage` para generar reportes de cobertura de tests.
+
+## Clonar repositorio
+```bash
+git clone ssh://git@codeberg.org/ichigar/cepy_pd4.git
+cd cepy_pd4/proyecto/03-testing
+```
+
+## Preparar entorno
+```bash
+cd Subwey
+python -m venv .venv
+.venv/Scripts/activate               # GitBash
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass #Si da error de UnauthorizedAcess en PowerShell
+.venv/Scripts/Activate.ps1           # PowerShell
+pip install -r requirements.txt
+cd ..
+```
 
 ## Ejecutar el menu
 ```bash
 python -m Subwey.presentation.menu_ingredientes
+```
+
+## Ejecutar tests y cobertura
+```bash
+python -m unittest
+coverage run -m unittest
+coverage report
 ```
 
 ## Flujo rapido de ejemplo

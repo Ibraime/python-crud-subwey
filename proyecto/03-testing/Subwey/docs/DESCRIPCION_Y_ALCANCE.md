@@ -15,7 +15,7 @@ Incluye:
 - Servicios de aplicacion (`application/servicios_ingrediente.py`), (`application/servicios_bocadillo.py`).
 - Entidades y reglas del dominio (`domain/ingrediente.py`, `domain/bocadillo.py`, `domain/usuario.py`).
 - Repositorio en memoria y datos iniciales (`infrastructure/`).
-- Tests de comprobacion por pasos (`test_*.py`).
+- Tests de comprobacion por pasos (`tests/test_*.py`).
 
 No incluye:
 - Persistencia real (BD/archivos), interfaz grafica, pagos reales, autenticacion.
