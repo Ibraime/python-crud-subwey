@@ -1,5 +1,16 @@
 # Tests y pasos
 
+## Preparar entorno
+```bash
+cd Subwey
+python -m venv .venv
+.venv/Scripts/activate               # GitBash
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass #Si da error de UnauthorizedAcess en PowerShell
+.venv/Scripts/Activate.ps1           # PowerShell
+pip install -r requirements.txt
+cd ..
+```
+
 ## Ejecucion de pruebas
 Desde la carpeta padre que contiene el paquete `Subwey/`:
 

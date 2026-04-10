@@ -103,7 +103,7 @@ class TestRepositorioBocadillo(unittest.TestCase):
         self.repo_bocadillo._bocadillos.clear()
         resultado = self.repo_bocadillo.listar()
 
-        self.assertEqual(resultado, "(No hay bocadillos registrados)")
+        self.assertEqual(resultado, [])
 
 
 if __name__ == "__main__":
