@@ -2,3 +2,7 @@ __pycache__/
 .venv/
 .coverage
 htmlcov/
+*.pyc
+.pytest_cache/
+test_venv/
+prueba_*.py
