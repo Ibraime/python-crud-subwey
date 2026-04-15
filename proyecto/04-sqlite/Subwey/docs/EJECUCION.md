@@ -22,6 +22,11 @@ pip install -r requirements.txt
 cd ..
 ```
 
+## Preparar o reiniciar base de datos
+```bash
+python -m crear_bd.py  
+```
+
 ## Ejecutar el menu
 ```bash
 cd python-crud-subwey/proyecto/04-sqlite
@@ -31,8 +36,8 @@ python -m Subwey.presentation.menu_ingredientes
 ## Ejecutar tests y cobertura
 ```bash
 python -m unittest
-coverage run -m unittest
-coverage report
+python -m coverage run -m unittest
+python -m coverage report
 ```
 
 ## Flujo rapido de ejemplo

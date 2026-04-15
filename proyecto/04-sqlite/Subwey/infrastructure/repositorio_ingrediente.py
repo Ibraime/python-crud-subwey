@@ -133,17 +133,32 @@ class RepositorioIngrediente:
         Elimina un ingrediente del repositorio.
 
         :param nombre: Nombre del ingrediente.
-        :raises ValueError: Si el ingrediente no existe.
+        :raises ValueError: Si no existe o está en uso.
         """
         nombre = nombre.strip().lower()
+        conn = self._conectar()
 
-        if self.obtener_por_nombre(nombre) is None:
+        cursor = conn.execute(
+            "SELECT nombre FROM ingredientes WHERE nombre = ?",
+            (nombre,)
+        )
+
+        if cursor.fetchone() is None:
             raise ValueError("El ingrediente no existe.")
 
-        with self._conectar() as conn:
+        try:
             conn.execute(
                 "DELETE FROM ingredientes WHERE nombre = ?",
-                (nombre,),
+                (nombre,)
+            )
+
+            if not self._conn:
+                conn.commit()
+
+        # Captura el error de clave foránea
+        except sqlite3.IntegrityError:
+            raise ValueError(
+                "No se puede eliminar el ingrediente porque está en uso en un bocadillo."
             )
 
     def listar(self):

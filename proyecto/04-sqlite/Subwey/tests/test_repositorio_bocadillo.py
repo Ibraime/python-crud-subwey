@@ -1,6 +1,5 @@
 import unittest
 import sqlite3
-from pathlib import Path
 
 from Subwey.infrastructure.repositorio_bocadillo import RepositorioBocadillo
 from Subwey.infrastructure.repositorio_ingrediente import RepositorioIngrediente
@@ -13,20 +12,12 @@ class TestRepositorioBocadillo(unittest.TestCase):
     # Bocadillo("vegetal", [tomate, aguacate])
     # Bocadillo("caprese", [tomate, queso])
 
-    BD_TEST = Path("test_subway.db")
-
     def setUp(self):
-        # eliminar BD anterior si existe
-        if self.BD_TEST.exists():
-            try:
-                self.BD_TEST.unlink()
-            except PermissionError:
-                pass
+        # BD en memoria (nunca toca disco)
+        self.conn = sqlite3.connect(":memory:")
+        self.conn.execute("PRAGMA foreign_keys = ON")
 
-        # crear esquema limpio SOLO PARA TEST
-        conn = sqlite3.connect(self.BD_TEST)
-        cursor = conn.cursor()
-        cursor.execute("PRAGMA foreign_keys = ON")
+        cursor = self.conn.cursor()
 
         # TABLAS
         cursor.execute("""
@@ -87,22 +78,18 @@ class TestRepositorioBocadillo(unittest.TestCase):
             ("caprese", "queso")
         ])
 
-        conn.commit()
-        conn.close()
+        self.conn.commit()
 
-        # repositorios apuntando a BD de test
-        self.repo_ingrediente = RepositorioIngrediente(str(self.BD_TEST))
-        self.repo_bocadillo = RepositorioBocadillo(str(self.BD_TEST))
+        # 👇 REPOS CON MISMA CONEXIÓN (CLAVE)
+        self.repo_ingrediente = RepositorioIngrediente(conn=self.conn)
+        self.repo_bocadillo = RepositorioBocadillo(conn=self.conn)
 
         self.tomate = self.repo_ingrediente.obtener_por_nombre("tomate")
         self.queso = self.repo_ingrediente.obtener_por_nombre("queso")
 
     def tearDown(self):
-        try:
-            if self.BD_TEST.exists():
-                self.BD_TEST.unlink()
-        except PermissionError:
-            pass
+        # cerrar conexión (libera todo)
+        self.conn.close()
 
     # TESTS
 
