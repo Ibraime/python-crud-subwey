@@ -39,16 +39,14 @@ def main():
     Inicializa los repositorios y servicios necesarios y mantiene
     un bucle hasta que el usuario decide salir.
     """
-    # Inicializa repositorio y servicio de ingredientes
+
     repo = RepositorioIngrediente()
     servicio = ServicioIngrediente(repo)
 
-    # Inicializa repositorio y servicio de bocadillos
-    # para mantener consistencia de datos al cambiar de menú
+    # Para mantener consistencia de datos al cambiar de menú
     repo_bocadillo = RepositorioBocadillo()
     servicio_bocadillo = ServicioBocadillo(repo_bocadillo)
 
-    # Inicializa repositorio y servicio de usuarios
     repo_usuario = RepositorioUsuario()
     servicio_usuario = ServicioUsuario(repo_usuario)
 
