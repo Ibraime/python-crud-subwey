@@ -1,7 +1,7 @@
 import sqlite3
 
 # 1. Conectar a la base de datos (se crea el fichero si no existe)
-conn = sqlite3.connect("subway.db")
+conn = sqlite3.connect("subwey.db")
 cursor = conn.cursor()
 
 # 2. Activar soporte de claves foráneas (SQLite lo trae desactivado por defecto)

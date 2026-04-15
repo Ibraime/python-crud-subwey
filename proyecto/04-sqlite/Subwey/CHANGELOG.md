@@ -1,6 +1,21 @@
 # Changelog
 
-## [0.3.1] - 2026-02-13 (Fase 03: testing)
+## [0.4.0] - 2026-04-15 (Fase 04: SQLite + tests de repositorio)
+
+### Added
+
+- `crear_bd.py`: script para crear el esquema e insertar datos iniciales.
+- `subwey.db`: base de datos SQLite con los datos iniciales.
+- `repositorio_usuario`: repositorio básico para manejar la tabla de usuario.
+- `servicio_usuario`: servicio para conectar el repositorio de usuarios con el menú de bocadillos.
+
+
+### Changed
+- `tests/*`: tests actualizados para simular que usa la base de datos.
+- `infrastructure/*`: repositorios actualizados para usar la base de datos sqlite.
+- `docs/EJECUCION.md`: pasos de como crear o reiniciar la base de datos.
+  
+## [0.3.1] - 2026-04-10 (Fase 03: testing)
 
 ### Changed
 - Corregida la documentación, sobre env y coverage, y añadir docstrings

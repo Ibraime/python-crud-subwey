@@ -41,19 +41,19 @@ Algunos tests tienen dependencia con otros archivos al parte del que testea prin
 Desde la carpeta padre que contiene el paquete `Subwey/`:
 
 ```bash
-coverage run -m unittest
+python -m coverage run -m unittest
 ```
 
 Generar reporte en consola:
 
 ```bash
-coverage report
+python -m coverage report
 ```
 
 Generar reporte HTML:
 
 ```bash
-coverage html
+python -m coverage html
 ```
 
 El reporte se consulta en `htmlcov/index.html`.

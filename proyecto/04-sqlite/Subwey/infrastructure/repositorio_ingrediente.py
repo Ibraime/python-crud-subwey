@@ -9,7 +9,7 @@ class RepositorioIngrediente:
     Permite crear, consultar, actualizar stock y eliminar ingredientes.
     """
 
-    def __init__(self, db_path="subway.db", conn=None):
+    def __init__(self, db_path="subwey.db", conn=None):
         """
         Inicializa el repositorio con la ruta a la base de datos.
 

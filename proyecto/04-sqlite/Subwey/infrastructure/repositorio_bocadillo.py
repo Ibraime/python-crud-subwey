@@ -19,7 +19,7 @@ class RepositorioBocadillo:
     incluyendo versiones promocionales.
     """
 
-    def __init__(self, conn=None, db_path="subway.db"):
+    def __init__(self, conn=None, db_path="subwey.db"):
         """
         Inicializa el repositorio con la base de datos.
 

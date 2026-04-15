@@ -17,7 +17,7 @@ class RepositorioUsuario:
     Permite consultar usuarios registrados en la base de datos.
     """
 
-    def __init__(self, db_path="subway.db"):
+    def __init__(self, db_path="subwey.db"):
         """
         Inicializa el repositorio con la ruta de la base de datos.
 
