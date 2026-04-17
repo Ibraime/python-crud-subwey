@@ -338,7 +338,13 @@ print("Base de datos creada en: subway.db")
 
 ## Fase 7: Ejemplo de implementación del repositorio SQLite
 
-Aquí tienes un ejemplo de cómo implementaría uno de tus repositorios usando SQLite en lugar de diccionarios en memoria.
+Aquí tienes un ejemplo de cómo implementaría uno de tus repositorios usando SQLite.
+
+**Nota sobre el código de tus repositorios actuales:** Tu `RepositorioBocadillo` ya tiene una implementación funcional, pero con algunas diferencias respecto a este ejemplo:
+- Tu método `guardar(self, nombre, ingredientes, descuento=None, autor=None)` recibe los datos sueltos; el ejemplo de abajo recibe el objeto `bocadillo` completo ya construido. Es una pequeña mejora de diseño orientada a objetos: la capa de servicio construye el `Bocadillo`/`BocadilloPromocion` y lo pasa al repositorio.
+- Tu repositorio lanza `ValueError` genéricos; este ejemplo los transforma en excepciones de dominio específicas (`BocadilloYaExisteError`, etc.).
+
+Cuando apliques los cambios, puedes elegir mantener tu firma actual de `guardar()` y centrarte únicamente en migrar de `ValueError` a excepciones de dominio, o evolucionar a un diseño más OO como el del ejemplo. Ambas opciones son válidas para la Fase 04.
 
 **Importante:** Este ejemplo asume que ya has creado las **excepciones de dominio** en `infrastructure/errores.py` (ver "Excepciones de dominio para persistencia" en la checklist de la Fase 04). Si aún no las has creado, debes hacerlo primero. Las excepciones necesarias son:
 
@@ -368,7 +374,8 @@ class ErrorPersistencia(ErrorRepositorio):
 
 ```python
 import sqlite3
-from infrastructure.errores import BocadilloYaExisteError, ErrorPersistencia
+from Subwey.infrastructure.errores import BocadilloYaExisteError, ErrorPersistencia
+
 
 class RepositorioBocadilloSQLite:
     def __init__(self, ruta_bd="subway.db"):
@@ -381,27 +388,33 @@ class RepositorioBocadilloSQLite:
             with conn:
                 cursor = conn.cursor()
                 cursor.execute("PRAGMA foreign_keys = ON")
-                
+
+                # Discriminador y valor del descuento
+                if bocadillo.es_promocional():
+                    es_promocion = 1
+                    descuento = bocadillo.descuento  # solo existe en BocadilloPromocion
+                else:
+                    es_promocion = 0
+                    descuento = 0
+
                 # Insertar en tabla bocadillos
-                es_promocion = 1 if bocadillo.es_promocional() else 0
-                descuento = bocadillo.descuento if es_promocion else 0
                 cursor.execute(
-                    """INSERT INTO bocadillos 
+                    """INSERT INTO bocadillos
                        (nombre, autor_nombre, es_promocion, descuento)
                        VALUES (?, ?, ?, ?)""",
-                    (bocadillo.nombre, 
-                     bocadillo.autor.nombre,
+                    (bocadillo.nombre,
+                     bocadillo.autor.nombre,  # autor es un Usuario; .nombre es su atributo público
                      es_promocion,
-                     descuento)
+                     descuento),
                 )
-                
-                # Insertar relaciones N:M en tabla intermedia
+
+                # Insertar relaciones N:M en la tabla intermedia
                 for ingrediente in bocadillo.ingredientes:
                     cursor.execute(
-                        """INSERT INTO bocadillo_ingredientes 
+                        """INSERT INTO bocadillo_ingredientes
                            (bocadillo_nombre, ingrediente_nombre)
                            VALUES (?, ?)""",
-                        (bocadillo.nombre, ingrediente.nombre)
+                        (bocadillo.nombre, ingrediente.nombre),
                     )
         except sqlite3.IntegrityError as e:
             # IntegrityError → violación de PRIMARY KEY (nombre duplicado)
@@ -431,13 +444,14 @@ class RepositorioBocadilloSQLite:
 Al recuperar un bocadillo, necesitamos reconstruir también sus ingredientes (que están en otra tabla vía la tabla intermedia). Para ello, este ejemplo recibe el repositorio de ingredientes como parámetro en el constructor (inyección de dependencias), y lo usa cuando lo necesita.
 
 ```python
-from infrastructure.errores import (
+import sqlite3
+from Subwey.infrastructure.errores import (
     BocadilloYaExisteError,
     BocadilloNoEncontradoError,
     ErrorPersistencia,
 )
-from domain.bocadillo import Bocadillo, BocadilloPromocion
-from domain.usuario import Usuario
+from Subwey.domain.bocadillo import Bocadillo, BocadilloPromocion
+from Subwey.domain.usuario import Usuario
 
 
 class RepositorioBocadilloSQLite:
@@ -481,9 +495,10 @@ class RepositorioBocadilloSQLite:
                 for nom in nombres_ingredientes
             ]
 
-            # Reconstruir el bocadillo del tipo correcto
+            # Reconstruir el bocadillo del tipo correcto según el discriminador
             autor = Usuario(autor_nombre)
             if es_promocion == 1:
+                # El constructor es: BocadilloPromocion(nombre, ingredientes, descuento_porcentaje=10, autor=None)
                 return BocadilloPromocion(nombre_b, ingredientes, descuento, autor)
             else:
                 return Bocadillo(nombre_b, ingredientes, autor)
