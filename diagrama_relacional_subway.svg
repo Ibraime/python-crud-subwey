@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 750" width="1400" height="750">
+  <defs>
+    <style>
+      .table-box { fill: #ffffff; stroke: #333; stroke-width: 2; }
+      .table-header { fill: #2c3e50; }
+      .pk-row { fill: #fff9e6; stroke: #ddd; stroke-width: 1; }
+      .fk-row { fill: #ffe6e6; stroke: #ddd; stroke-width: 1; }
+      .normal-row { fill: #f8f8f8; stroke: #ddd; stroke-width: 1; }
+      .text-white { fill: white; font-weight: bold; font-size: 14px; }
+      .text-black { fill: black; font-size: 12px; font-family: 'Monaco', monospace; }
+      .text-label { fill: black; font-size: 12px; font-family: Arial; }
+      .rel-line { stroke: #3498db; stroke-width: 2.5; fill: none; }
+      .rel-label { fill: #2c3e50; font-size: 11px; font-weight: bold; background: white; }
+      .legend-label { fill: black; font-size: 12px; }
+    </style>
+    <marker id="arrow-end" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#3498db"/>
+    </marker>
+  </defs>
+
+  <!-- Título -->
+  <text x="700" y="35" font-size="24" font-weight="bold" text-anchor="middle" fill="#2c3e50">
+    Subwey - Diagrama Relacional SQLite
+  </text>
+
+  <!-- ===== TABLA: USUARIOS ===== -->
+  <rect x="50" y="80" width="280" height="40" class="table-header"/>
+  <text x="190" y="108" text-anchor="middle" class="text-white">usuarios</text>
+
+  <rect x="50" y="120" width="280" height="30" class="pk-row"/>
+  <text x="60" y="141" class="text-black">* nombre TEXT PRIMARY KEY</text>
+
+  <!-- ===== TABLA: INGREDIENTES ===== -->
+  <rect x="1050" y="80" width="300" height="40" class="table-header"/>
+  <text x="1200" y="108" text-anchor="middle" class="text-white">ingredientes</text>
+
+  <rect x="1050" y="120" width="300" height="30" class="pk-row"/>
+  <text x="1060" y="141" class="text-black">* nombre TEXT PRIMARY KEY</text>
+
+  <rect x="1050" y="150" width="300" height="30" class="normal-row"/>
+  <text x="1060" y="171" class="text-black">precio REAL NOT NULL (CHECK &gt; 0)</text>
+
+  <rect x="1050" y="180" width="300" height="30" class="normal-row"/>
+  <text x="1060" y="201" class="text-black">stock INTEGER NOT NULL (CHECK &gt;= 0)</text>
+
+  <!-- ===== TABLA: BOCADILLOS ===== -->
+  <rect x="450" y="260" width="420" height="40" class="table-header"/>
+  <text x="660" y="288" text-anchor="middle" class="text-white">bocadillos</text>
+
+  <rect x="450" y="300" width="420" height="30" class="pk-row"/>
+  <text x="460" y="321" class="text-black">* nombre TEXT PRIMARY KEY</text>
+
+  <rect x="450" y="330" width="420" height="30" class="fk-row"/>
+  <text x="460" y="351" class="text-black">autor_nombre TEXT (FK -&gt; usuarios)</text>
+
+  <rect x="450" y="360" width="420" height="30" class="normal-row"/>
+  <text x="460" y="381" class="text-black">es_promocion INTEGER DEFAULT 0</text>
+
+  <rect x="450" y="390" width="420" height="30" class="normal-row"/>
+  <text x="460" y="411" class="text-black">descuento REAL DEFAULT 0</text>
+
+  <!-- ===== TABLA: BOCADILLO_INGREDIENTES ===== -->
+  <rect x="450" y="520" width="420" height="40" class="table-header"/>
+  <text x="660" y="548" text-anchor="middle" class="text-white">bocadillo_ingredientes</text>
+
+  <rect x="450" y="560" width="420" height="30" class="fk-row"/>
+  <text x="460" y="581" class="text-black">bocadillo_nombre TEXT (PK, FK -&gt; bocadillos)</text>
+
+  <rect x="450" y="590" width="420" height="30" class="fk-row"/>
+  <text x="460" y="611" class="text-black">ingrediente_nombre TEXT (PK, FK -&gt; ingredientes)</text>
+
+  <!-- ===== RELACIONES (FLECHAS) ===== -->
+
+  <!-- Usuarios -> Bocadillos (autor_nombre) -->
+  <path d="M 190 150 Q 190 230 555 300" class="rel-line" marker-end="url(#arrow-end)"/>
+  <text x="280" y="220" text-anchor="middle" class="rel-label">1:N</text>
+
+  <!-- Bocadillos -> Bocadillo_ingredientes -->
+  <line x1="555" y1="420" x2="555" y2="560" class="rel-line" marker-end="url(#arrow-end)"/>
+  <text x="525" y="495" text-anchor="middle" class="rel-label">1:N</text>
+
+  <!-- Ingredientes -> Bocadillo_ingredientes -->
+  <path d="M 1200 210 Q 1100 400 870 590" class="rel-line" marker-end="url(#arrow-end)"/>
+  <text x="1080" y="400" text-anchor="middle" class="rel-label">1:N</text>
+
+  <!-- Relación N:M indicada -->
+  <text x="660" y="475" text-anchor="middle" font-size="11" font-style="italic" fill="#7f8c8d">
+    (relación N:M entre bocadillos e ingredientes vía tabla intermedia)
+  </text>
+
+  <!-- ===== LEYENDA ===== -->
+  <rect x="50" y="680" width="1300" height="60" fill="#f0f0f0" stroke="#999" stroke-width="1" rx="5"/>
+
+  <rect x="70" y="695" width="20" height="20" class="pk-row" stroke="#333" stroke-width="1"/>
+  <text x="100" y="710" class="legend-label">* Clave Primaria (identifica filas de forma unica)</text>
+
+  <rect x="550" y="695" width="20" height="20" class="fk-row" stroke="#333" stroke-width="1"/>
+  <text x="580" y="710" class="legend-label">Clave Foranea (vincula a otra tabla)</text>
+
+  <text x="1030" y="710" class="legend-label">1:N = Una a muchos | N:M = Muchos a muchos</text>
+</svg>
