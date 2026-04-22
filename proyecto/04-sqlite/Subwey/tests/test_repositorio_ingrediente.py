@@ -1,7 +1,7 @@
 import unittest
 import sqlite3
 from Subwey.infrastructure.repositorio_ingrediente import RepositorioIngrediente
-
+from Subwey.infrastructure.errores import IngredienteDuplicadoError
 
 class TestRepositorioIngrediente(unittest.TestCase):
 
@@ -59,7 +59,7 @@ class TestRepositorioIngrediente(unittest.TestCase):
         self.assertEqual(ingrediente.precio, 5)
 
     def test_no_permite_nombre_repetido(self):
-        with self.assertRaises(ValueError):
+        with self.assertRaises(IngredienteDuplicadoError):
             self.repo.guardar("tomate", 4, 10)
 
     def test_precio_invalido_lanza_error(self):

@@ -1,5 +1,6 @@
 import sqlite3
 from Subwey.domain.ingrediente import Ingrediente
+from Subwey.infrastructure.errores import IngredienteDuplicadoError, IngredienteEnUsoError
 
 
 class RepositorioIngrediente:
@@ -58,7 +59,7 @@ class RepositorioIngrediente:
                     (nombre, precio_float, stock_int),
                 )
         except sqlite3.IntegrityError:
-            raise ValueError("Ya existe un ingrediente con ese nombre.")
+            raise IngredienteDuplicadoError("Ya existe un ingrediente con ese nombre.")
 
     def obtener_por_nombre(self, nombre):
         """
@@ -157,7 +158,7 @@ class RepositorioIngrediente:
 
         # Captura el error de clave foránea
         except sqlite3.IntegrityError:
-            raise ValueError(
+            raise IngredienteEnUsoError(
                 "No se puede eliminar el ingrediente porque está en uso en un bocadillo."
             )
 

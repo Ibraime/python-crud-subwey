@@ -4,6 +4,7 @@ import sqlite3
 from Subwey.infrastructure.repositorio_bocadillo import RepositorioBocadillo
 from Subwey.infrastructure.repositorio_ingrediente import RepositorioIngrediente
 from Subwey.domain.bocadillo import BocadilloPromocion
+from Subwey.infrastructure.errores import BocadilloDuplicadoError
 
 
 class TestRepositorioBocadillo(unittest.TestCase):
@@ -117,7 +118,7 @@ class TestRepositorioBocadillo(unittest.TestCase):
         self.assertEqual(bocadillo.nombre, "tomate y queso")
 
     def test_guardar_bocadillo_repetido(self):
-        with self.assertRaises(ValueError):
+        with self.assertRaises(BocadilloDuplicadoError):
             self.repo_bocadillo.guardar("vegetal", [self.tomate])
 
     def test_guardar_bocadillo_promocion(self):

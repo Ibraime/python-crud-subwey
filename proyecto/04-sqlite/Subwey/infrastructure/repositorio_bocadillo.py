@@ -9,6 +9,7 @@ import sqlite3
 from Subwey.domain.bocadillo import Bocadillo, BocadilloPromocion
 from Subwey.domain.usuario import Usuario
 from Subwey.domain.ingrediente import Ingrediente
+from Subwey.infrastructure.errores import BocadilloDuplicadoError
 
 
 class RepositorioBocadillo:
@@ -81,7 +82,7 @@ class RepositorioBocadillo:
                 conn.commit()
 
         except sqlite3.IntegrityError:
-            raise ValueError("Ya existe un bocadillo con ese nombre.")
+            raise BocadilloDuplicadoError("Ya existe un bocadillo con ese nombre.")        
 
         if descuento is not None:
             return BocadilloPromocion(nombre, ingredientes, descuento, autor)

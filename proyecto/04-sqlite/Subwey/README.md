@@ -45,7 +45,25 @@ La aplicación implementa operaciones **CRUD** (Crear, Leer, Actualizar y Elimin
 
 ## ▶️ Ejemplo de uso
 
-Para ejecutar la aplicación desde la raíz del proyecto (En este caso desde la carpeta padre de Subwey (01-capas, 02-documentando, 03-testing, etc)):
+Primero preparamos el entorno para no falten dependencias
+
+```bash
+cd Subwey
+python -m venv .venv
+.venv/Scripts/activate               # GitBash
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass #Si da error de UnauthorizedAcess en PowerShell
+.venv/Scripts/Activate.ps1           # PowerShell
+pip install -r requirements.txt
+cd ..
+```
+
+Segundo hay que usar el script de crear_bd para asegurar que la base de datos tiene los datos iniciales
+
+```bash
+python -m crear_bd.py  
+```
+
+Para ejecutar la aplicación desde la raíz del proyecto (Desde la carpeta padre de Subwey (01-capas, 02-documentando, 03-testing, etc)):
 
 ```bash
 python -m Subwey.presentation.menu_ingredientes

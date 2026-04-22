@@ -1,9 +1,18 @@
 # Changelog
 
+## [0.4.1] - 2026-04-22 (Fase 04: SQLite + tests de repositorio)
+
+### Added
+- `errores.py`: excepciones para los errores de sqlite, y que no tenga todo value error.
+
+### Changed
+- `tests/*`: tests actualizados para simular que usa la base de datos.
+- `README.md`: nuevas instrucciones de cómo ejecutar el script de inicialización
+- `docs/EJECUCION.md`: pasos de como crear o reiniciar la base de datos.
+  
 ## [0.4.0] - 2026-04-15 (Fase 04: SQLite + tests de repositorio)
 
 ### Added
-
 - `crear_bd.py`: script para crear el esquema e insertar datos iniciales.
 - `subwey.db`: base de datos SQLite con los datos iniciales.
 - `repositorio_usuario`: repositorio básico para manejar la tabla de usuario.
