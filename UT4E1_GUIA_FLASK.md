@@ -124,7 +124,7 @@ if __name__ == "__main__":
 
 ---
 
-## Puntos de atención
+## Advertencias
 
 ### Herencia `Bocadillo` → `BocadilloPromocion`
 
