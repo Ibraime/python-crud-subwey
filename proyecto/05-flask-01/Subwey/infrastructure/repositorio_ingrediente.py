@@ -179,7 +179,7 @@ class RepositorioIngrediente:
 
             return filas
     
-def crear_servicio_sqlite(db_path="subwey.db"):
+def crear_servicio_ingrediente(db_path="subwey.db"):
     """
     Crea una instancia completa del servicio de ingredientes
     utilizando un repositorio SQLite.

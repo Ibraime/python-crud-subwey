@@ -1,10 +1,10 @@
 from flask import Blueprint, render_template, redirect, url_for # type: ignore
-from Subwey.infrastructure.repositorio_ingrediente import crear_servicio_sqlite
+from Subwey.infrastructure.repositorio_ingrediente import crear_servicio_ingrediente
 from Subwey.infrastructure.errores import IngredienteEnUsoError, IngredienteDuplicadoError
 
 bp_ingredientes = Blueprint('ingredientes', __name__, url_prefix='/ingredientes')
 
-servicio = crear_servicio_sqlite()
+servicio = crear_servicio_ingrediente()
 
 
 def render_error(msg, code=400):
