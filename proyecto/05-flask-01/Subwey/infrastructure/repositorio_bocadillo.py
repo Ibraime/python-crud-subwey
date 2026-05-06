@@ -82,7 +82,9 @@ class RepositorioBocadillo:
                 conn.commit()
 
         except sqlite3.IntegrityError:
-            raise BocadilloDuplicadoError("Ya existe un bocadillo con ese nombre.")        
+            raise BocadilloDuplicadoError("Ya existe un bocadillo con ese nombre.")
+        
+                
 
         if descuento is not None:
             return BocadilloPromocion(nombre, ingredientes, descuento, autor)

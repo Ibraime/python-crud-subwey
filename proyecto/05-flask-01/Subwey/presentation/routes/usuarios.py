@@ -28,8 +28,8 @@ def listar():
 
     content += """
         <div class="center">
-            <a class="btn" href="/usuarios/nuevo/demo">crear usuario demo</a>
             <a class="btn btn-secondary" href="/">Inicio</a>
+            <a class="btn" href="/usuarios/nuevo/demo">crear usuario demo</a>
         </div>
     """
 

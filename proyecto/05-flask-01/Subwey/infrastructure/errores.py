@@ -18,6 +18,13 @@ class BocadilloDuplicadoError(Exception):
     """
     pass
 
+class BocadilloSinIngredientesError(Exception):
+    """
+    Se lanza cuando se intenta crear o modificar un bocadillo
+    sin ningún ingrediente.
+    """
+    pass
+
 
 class UsuarioDuplicadoError(Exception):
     """

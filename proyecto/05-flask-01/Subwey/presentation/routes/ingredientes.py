@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for # type: ignore
+from flask import Blueprint, render_template, redirect, url_for  # type: ignore
 from Subwey.infrastructure.repositorio_ingrediente import crear_servicio_ingrediente
 from Subwey.infrastructure.errores import IngredienteEnUsoError, IngredienteDuplicadoError
 
@@ -25,12 +25,20 @@ def listar():
 
     for n, p, s in ingredientes:
         content += f"""
-        <li>
-            <span>{n} — {p:.2f}€ — stock: {s}</span>
+        <li class="boc-item">
+
+            <div class="boc-info">
+                <div class="boc-title">{n}</div>
+                <div class="boc-sub">
+                    💰 {p:.2f}€ · 📦 {s}
+                </div>
+            </div>
+
             <span>
                 <a class="btn" href="{n}">ver</a>
                 <a class="btn btn-danger" href="{n}/eliminar">eliminar</a>
             </span>
+
         </li>
         """
 
@@ -54,9 +62,9 @@ def detalle(nombre):
         return render_error("Ingrediente no encontrado", 404)
 
     content = f"""
-        <h2>{ing.nombre}</h2>
+        <h2>🥬 {ing.nombre}</h2>
 
-        <p>💰 Precio: {ing.precio}€</p>
+        <p>💰 Precio: {ing.precio:.2f}€</p>
         <p>📦 Stock: {ing.stock}</p>
 
         <a class="btn" href="{nombre}/reponer/1">+1 stock</a>
@@ -86,7 +94,8 @@ def consumir(nombre, cantidad):
         return redirect(url_for('ingredientes.detalle', nombre=nombre))
     except ValueError as e:
         return render_error(str(e), 400)
-    
+
+
 @bp_ingredientes.route('/nuevo/<nombre>/<float:precio>/<int:stock>')
 def crear(nombre, precio, stock):
     try:
@@ -96,7 +105,8 @@ def crear(nombre, precio, stock):
         return render_error(str(e), 409)
     except ValueError as e:
         return render_error(str(e), 400)
-    
+
+
 @bp_ingredientes.route('/<nombre>/eliminar')
 def eliminar(nombre):
     try:
