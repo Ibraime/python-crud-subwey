@@ -57,5 +57,12 @@ def eliminar(nombre):
 
 @bp_usuarios.route('/<antiguo>/editar/<nuevo>')
 def modificar(antiguo, nuevo):
-    servicio.actualizar_usuario(antiguo, nuevo)
-    return redirect(url_for('usuarios.listar'))
+    try:
+        servicio.actualizar_usuario(antiguo, nuevo)
+        return redirect(url_for('usuarios.listar'))
+    except UsuarioDuplicadoError as e:
+        return render_template("base.html", content=f"""
+            <h2>⚠️ Error</h2>
+            <p>{e}</p>
+            <a class="btn btn-secondary" href="/usuarios">Volver</a>
+        """)

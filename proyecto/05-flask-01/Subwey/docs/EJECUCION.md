@@ -24,13 +24,18 @@ cd ..
 
 ## Preparar o reiniciar base de datos
 ```bash
-python -m crear_bd.py  
+python -m crear_bd  
 ```
 
-## Ejecutar el menu
+## Ejecutar la aplicación
 ```bash
-cd python-crud-subwey/proyecto/04-sqlite
-python -m Subwey.presentation.menu_ingredientes
+python -m Subwey.presentation.app
+```
+
+Al ejecutarlo nos dará una url, con la que podemos ver la página en el nuestro navegador
+
+```bash
+ * Running on http://127.0.0.1:5000
 ```
 
 ## Ejecutar tests y cobertura

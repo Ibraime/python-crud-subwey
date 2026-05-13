@@ -1,8 +1,9 @@
 # Sistema de Gestión de Ingredientes Subwey
 
-Este proyecto es una **aplicación de consola desarrollada en Python** que permite gestionar el inventario de ingredientes de un restaurante de tipo *"subway"*. El sistema está orientado a realizar operaciones básicas de administración de stock de ingredientes mediante un menú interactivo.
+Este proyecto es una **aplicación web desarrollada en Python con Flask** que permite gestionar el inventario de ingredientes de un restaurante de tipo *"subway"*. El sistema está orientado a realizar operaciones básicas de administración de stock de ingredientes mediante un menú interactivo.
 
 La aplicación implementa operaciones **CRUD** (Crear, Leer, Actualizar y Eliminar), un control simple pero efectivo de los ingredientes disponibles, su precio y la cantidad en stock.
+Así como crear varios bocadillos con distintas combinaciones de los mismos.
 
 ---
 
@@ -11,7 +12,6 @@ La aplicación implementa operaciones **CRUD** (Crear, Leer, Actualizar y Elimin
 - **Python**
   Necesario para usar el comando python -m para ejecutar el programa. Probado con la versión 3.13.7 (64 bit) 
 
-
 ---
 
 ## 🧩 Funcionalidades
@@ -19,27 +19,19 @@ La aplicación implementa operaciones **CRUD** (Crear, Leer, Actualizar y Elimin
 - **Registrar ingrediente**  
   Permite añadir un nuevo ingrediente indicando su nombre, precio y cantidad inicial.
 
+- **Reponer y consumir ingrediente**  
+  Incrementa o decrementa el stock de un ingrediente existente.
+
 - **Registrar bocadillo**  
   Permite crear un bocadillo indicando su nombre, lista de ingredientes y su autor (el precio se calcula con la suma de los ingredientes).
+  También se puede crear uno de promoción que tendrá un porcentaje de descuento.
 
-- **Consumir ingrediente**  
-  Reduce la cantidad disponible de un ingrediente cuando se utiliza en una preparación.
-
-- **Reponer ingrediente**  
-  Incrementa el stock de un ingrediente existente.
 
 - **Modificar ingredientes del bocadillo**  
-  Como su nombre indica permite cambiar los ingredientes del bocadillo, borra los que tiene y empiezas a elegir de 0, si cancelas se
-  queda como estaba.
+  Como su nombre indica permite cambiar los ingredientes del bocadillo, también modificar el descuento o quitarlo.
 
-- **Eliminar ingrediente/bocadillo**  
-  Elimina un ingrediente/bocadillo de la lista.
-
-- **Listar ingredientes**  
-  Muestra todos los ingredientes registrados junto con su precio y cantidad actual. (Por defecto se crean 3 ingredientes, para probar más rápido)
-
-- **Listar bocadillos**  
-  Muestra todos los bocadillos registrados junto con su precio final, ingredientes y autor. (Por defecto se crean 2 bocadillos, para probar más rápido)
+- **Eliminar un ingrediente/bocadillo/usuario**  
+  Elimina un ingrediente/bocadillo/usuario de la base de datos.
 
 ---
 
@@ -63,45 +55,20 @@ Segundo hay que usar el script de crear_bd para asegurar que la base de datos ti
 python -m crear_bd.py  
 ```
 
-Para ejecutar la aplicación desde la raíz del proyecto (Desde la carpeta padre de Subwey (01-capas, 02-documentando, 03-testing, etc)):
+Para ejecutar la aplicación desde la raíz del proyecto (Desde la carpeta padre de Subwey (05-flask-01, en adelante)):
 
 ```bash
-python -m Subwey.presentation.menu_ingredientes
+python -m Subwey.presentation.app
 ```
 
 ### Ejemplo salida del programa
 
-```text
-=== SUBWEY (ingredientes) ===
-1. Registrar ingrediente
-2. Consumir ingrediente
-3. Reponer ingrediente
-4. Eliminar ingrediente
-5. Listar ingredientes
-6. Menú de bocadillos
-7. Salir
-Elige una opción: 5
+Al ejecutarlo nos dará una url, con la que podemos ver la página en el nuestro navegador
 
-Listado de ingredientes:
-
-aguacate   - 7.00 € - 8.00  unidades
-queso      - 2.00 € - 42.00 unidades
-tomate     - 3.00 € - 20.00 unidades
+```bash
+ * Running on http://127.0.0.1:5000
 ```
 
-```text
-=== SUBWEY (bocadillos) ===
-1. Registrar bocadillo
-2. Modificar ingredientes del bocadillo
-3. Eliminar bocadillo
-4. Listar bocadillos
-5. Volver a ingredientes
-Elige una opción: 4
-
-Listado de bocadillos:
-              caprese          - 5.00 € - tomate, queso - Autor: Anónimo
-              vegetal          - 10.00€ - tomate, aguacate - Autor: Anónimo
-```
 
 ---
 
@@ -114,6 +81,8 @@ proyecto/
 │   │   └── __init__.py
 │   │   └── repositorio_ingrediente.py
 │   │   └── repositorio_bocadillo.py
+│   │   └── repositorio_usuario.py
+│   │   └── errores.py
 │   ├── domain/
 │   │   └── __init__.py
 │   │   └── ingrediente.py
@@ -123,10 +92,18 @@ proyecto/
 │   │   └── __init__.py
 │   │   └── menu_ingredientes.py
 │   │   └── menu_bocadillos.py
-│   └── application/
-│       └── __init__.py
-│       └── servicios_ingrediente.py
-│       └── servicios_bocadillo.py
+│   │   └── app.py
+│   │   └── routes/
+│   │       └── __init__.py
+│   │       └── ingredientes.py
+│   │       └── bocadillos.py
+│   │       └── usuarios.py
+│   ├─── application/
+│   │   └── __init__.py
+│   │   └── servicios_ingrediente.py
+│   │   └── servicios_bocadillo.py
+│   │   └── servicios_usuario.py
+│   └─── tests/...
 └── README.md
 ```
 
@@ -139,9 +116,12 @@ proyecto/
   Contiene las entidades de la base de datos, como `Ingrediente`, `Bocadillo` y `Usuario`, son la base del sistema que usamos como ejemplo (Sin incluir cesta de la compra y demás).
 
 - **presentation/**  
-  Maneja la interacción con el usuario mediante dos menús en consola que se conectan entre ellos.
+  Maneja la interacción con el usuario mediante la interfaz de la aplicación web.
 
 - **application/**  
   Implementa la lógica del programa, coordinando las operaciones entre el presentation e infrastructure.
+
+- **tests/**  
+  Para comprobar rapidamente que todo sigue funcionando, en caso de modificar algo por error
 
 ---

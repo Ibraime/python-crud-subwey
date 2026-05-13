@@ -82,12 +82,14 @@ class RepositorioUsuario:
         """
         antiguo_nombre = antiguo_nombre.strip().lower()
         nuevo_nombre = nuevo_nombre.strip().lower()
-
-        with self._conectar() as conn:
-            conn.execute(
-                "UPDATE usuarios SET nombre = ? WHERE nombre = ?",
-                (nuevo_nombre, antiguo_nombre)
-            )
+        try:
+            with self._conectar() as conn:
+                conn.execute(
+                    "UPDATE usuarios SET nombre = ? WHERE nombre = ?",
+                    (nuevo_nombre, antiguo_nombre)
+                )
+        except sqlite3.IntegrityError:
+            raise UsuarioDuplicadoError("Ya existe un usuario con ese nombre.")
 
 def crear_servicio_usuario(db_path="subwey.db"):
     """

@@ -132,7 +132,7 @@ class TestRepositorioIngrediente(unittest.TestCase):
         self.conn.commit()
 
         resultado = self.repo.listar()
-        self.assertEqual(resultado, "(No hay ingredientes registrados)")
+        self.assertEqual(resultado, [])
 
 
 if __name__ == "__main__":
