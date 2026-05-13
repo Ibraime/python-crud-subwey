@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.5.1] - 2026-05-13 (Fase 05 A1: Flask capa de presentación)
+
+### Added
+- `presentation/app.py`: interfaz web con flask, que funciona como el menú de consola, para modificar y crear ingredientes bocadillos y usuarios
+- `presentation/routes/`: para que sea más manejable separé la ruta para cada entidad en 3 archivos distintos.
+
+### Changed
+- `infrastructure/repositorio_x`: Se añadió una función a los repositorios usuarios e ingredientes para que sean más compatibles con flask, no afecta al resto del código.
+- `README.md`: nuevas instrucciones de cómo ejecutar la página web y explicación sobre nuevos archivos
+- `docs/EJECUCION.md`: pasos de cómo ejecutar la página web
+  
+
 ## [0.4.1] - 2026-04-22 (Fase 04: SQLite + tests de repositorio)
 
 ### Added
