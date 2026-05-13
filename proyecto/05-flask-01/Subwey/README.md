@@ -93,11 +93,14 @@ proyecto/
 │   │   └── menu_ingredientes.py
 │   │   └── menu_bocadillos.py
 │   │   └── app.py
-│   │   └── routes/
+│   │   ├── routes/
+│   │   │   └── __init__.py
+│   │   │   └── ingredientes.py
+│   │   │   └── bocadillos.py
+│   │   │   └── usuarios.py
+│   │   └── templates/
 │   │       └── __init__.py
-│   │       └── ingredientes.py
-│   │       └── bocadillos.py
-│   │       └── usuarios.py
+│   │       └── base.html
 │   ├─── application/
 │   │   └── __init__.py
 │   │   └── servicios_ingrediente.py
