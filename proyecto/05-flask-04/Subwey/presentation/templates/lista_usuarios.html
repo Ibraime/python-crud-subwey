@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}
+Usuarios
+{% endblock %}
+
+{% block content %}
+
+<h2>👤 Usuarios</h2>
+
+<ul class="boc-list">
+
+    {% for u in usuarios %}
+
+    <li class="boc-item">
+
+        <div class="boc-info">
+
+            <div class="boc-title">
+                {{ u.nombre }}
+            </div>
+
+        </div>
+
+        <div class="boc-actions">
+
+            <a class="btn"
+               href="{{ url_for('usuarios.modificar', nombre=u.nombre) }}">
+                modificar
+            </a>
+
+            <a class="btn btn-danger"
+               href="{{ url_for('usuarios.eliminar', nombre=u.nombre) }}">
+                eliminar
+            </a>
+
+        </div>
+
+    </li>
+
+    {% endfor %}
+
+</ul>
+
+<div class="center">
+
+    <a class="btn btn-secondary"
+       href="/">
+        Inicio
+    </a>
+
+    <a class="btn"
+       href="{{ url_for('usuarios.crear') }}">
+        Crear usuario
+    </a>
+
+</div>
+
+{% endblock %}

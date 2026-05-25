@@ -1,0 +1,134 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}Subwey{% endblock %}</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f6f8;
+            display: flex;
+            justify-content: center;
+            margin: 0;
+        }
+
+        .container {
+            width: 750px;
+            margin-top: 40px;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            padding: 12px;
+            margin: 8px 0;
+            background: #f9f9f9;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 6px 12px;
+            margin: 2px;
+            background: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+        }
+
+        .ing-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .ing-box {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #f4f4f4;
+            padding: 6px 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            user-select: none;
+        }
+
+        .ing-box input {
+            margin: 0;
+        }
+
+        .boc-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .boc-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f7f7f7;
+            padding: 12px 15px;
+            margin: 10px 0;
+            border-radius: 10px;
+        }
+
+        .boc-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            text-align: left;
+        }
+
+        .boc-title {
+            font-weight: bold;
+        }
+
+        .boc-sub {
+            font-size: 13px;
+            color: #555;
+        }
+
+        .boc-actions {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    {% block content %}
+    {% endblock %}
+
+</div>
+
+</body>
+</html>

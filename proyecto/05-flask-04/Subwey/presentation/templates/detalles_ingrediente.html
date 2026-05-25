@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ ing.nombre }}
+{% endblock %}
+
+{% block content %}
+
+<h2>🥬 {{ ing.nombre }}</h2>
+
+<p>💰 Precio: {{ "%.2f"|format(ing.precio) }}€</p>
+
+<p>📦 Stock: {{ ing.stock }}</p>
+
+<a class="btn"
+   href="{{ url_for('ingredientes.reponer', nombre=ing.nombre, cantidad=1) }}">
+    +1 stock
+</a>
+
+<a class="btn btn-danger"
+   href="{{ url_for('ingredientes.consumir', nombre=ing.nombre, cantidad=1) }}">
+    -1 stock
+</a>
+
+<div class="center">
+    <a class="btn btn-secondary"
+       href="{{ url_for('ingredientes.listar') }}">
+        Volver
+    </a>
+</div>
+
+{% endblock %}
