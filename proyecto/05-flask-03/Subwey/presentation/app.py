@@ -19,98 +19,15 @@
 # Solo se modificó este archivo
 # Comprobado que el menú comparte la misma base de datos que la aplicación web
 
-from flask import Flask, render_template_string, request # type: ignore
+from flask import Flask, render_template, request  # type: ignore
+
 from Subwey.presentation.routes.ingredientes import bp_ingredientes
 from Subwey.presentation.routes.bocadillos import bp_bocadillos
 from Subwey.presentation.routes.usuarios import bp_usuarios
 
-app = Flask(__name__)
-
-@app.before_request
-def log_peticion():
-    app.logger.info(f"{request.method} {request.path}")
-
-BASE_HTML = """
-<!doctype html>
-<html>
-<head>
-<meta charset="utf-8">
-
-<style>
-body {
-    font-family: Arial;
-    background: #f4f6f8;
-    display: flex;
-    justify-content: center;
-    margin: 0;
-}
-
-.container {
-    width: 750px;
-    margin-top: 40px;
-    background: white;
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-    text-align: center;
-}
-
-.btn {
-    display: inline-block;
-    padding: 10px 15px;
-    margin: 5px;
-    background: #007bff;
-    color: white;
-    text-decoration: none;
-    border-radius: 6px;
-}
-</style>
-
-</head>
-
-<body>
-<div class="container">
-{{ content | safe }}
-</div>
-</body>
-</html>
-"""
-
-@app.route('/')
-def home():
-    content = """
-        <h1>🥪 Subwey</h1>
-
-        <a class="btn" href="/ingredientes/">Ingredientes</a>
-        <a class="btn" href="/bocadillos/">Bocadillos</a>
-        <a class="btn" href="/usuarios/">Usuarios</a>
-    """
-    return render_template_string(BASE_HTML, content=content)
-
-@app.errorhandler(404)
-def no_encontrado(e):
-    return (f"<h2>404 — No encontrado</h2><p>{e}</p>"
-            f"<a href='/'>Volver</a>"), 404
-
-
-@app.errorhandler(500)
-def error_servidor(e):
-    return ("<h2>500 — Error del servidor</h2>"
-            "<p>Algo ha fallado. Prueba más tarde.</p>"
-            "<a href='/'>Volver</a>"), 500
-
-@app.route('/ayuda')
-def ayuda():
-    lineas = ['<h2>Rutas disponibles</h2><ul>']
-    for regla in app.url_map.iter_rules():
-        if regla.endpoint != 'static':
-            lineas.append(
-                f"<li><code>{regla.rule}</code> — {regla.endpoint}</li>"
-            )
-    lineas.append('</ul>')
-    return '\n'.join(lineas)
-
 import logging
+
+app = Flask(__name__)
 
 logging.basicConfig(
     filename='subwey.log',
@@ -119,10 +36,61 @@ logging.basicConfig(
 )
 
 
+@app.before_request
+def log_peticion():
+    app.logger.info(f"{request.method} {request.path}")
+
+
+@app.route('/')
+def home():
+
+    return render_template("home.html")
+
+
+@app.route('/ayuda')
+def ayuda():
+
+    rutas = []
+
+    for regla in app.url_map.iter_rules():
+
+        if regla.endpoint != 'static':
+
+            rutas.append({
+                "ruta": regla.rule,
+                "endpoint": regla.endpoint
+            })
+
+    return render_template(
+        "ayuda.html",
+        rutas=rutas
+    )
+
+
+@app.errorhandler(404)
+def no_encontrado(e):
+
+    return render_template(
+        "error.html",
+        titulo="404 — No encontrado",
+        msg="La página solicitada no existe."
+    ), 404
+
+
+@app.errorhandler(500)
+def error_servidor(e):
+
+    return render_template(
+        "error.html",
+        titulo="500 — Error del servidor",
+        msg="Ha ocurrido un error interno."
+    ), 500
+
 
 app.register_blueprint(bp_ingredientes)
 app.register_blueprint(bp_bocadillos)
 app.register_blueprint(bp_usuarios)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
