@@ -69,7 +69,7 @@ def ayuda():
 
 @app.errorhandler(404)
 def no_encontrado(e):
-
+    
     return render_template(
         "error.html",
         titulo="404 — No encontrado",

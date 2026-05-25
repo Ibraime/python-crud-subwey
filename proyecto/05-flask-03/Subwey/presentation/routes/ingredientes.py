@@ -21,6 +21,7 @@ servicio = crear_servicio_ingrediente()
 def render_error(msg, code=400):
     return render_template(
         "error.html",
+        titulo="400 — Error",
         msg=msg
     ), code
 
