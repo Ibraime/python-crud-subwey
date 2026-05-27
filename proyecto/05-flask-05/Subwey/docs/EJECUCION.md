@@ -37,7 +37,7 @@ Al ejecutarlo nos dará una url, con la que podemos ver la página en el nuestro
 ```bash
  * Running on http://127.0.0.1:5000
 ```
-
+  
 ## Alternativamente se puede testear con el menú en consola
 ```bash
 python -m Subwey.presentation.menu_ingredientes
@@ -80,3 +80,17 @@ python -m coverage report
 - "El ingrediente/bocadillo no existe." si se selecciona un nombre inexistente.
 - "Stock insuficiente" si se intenta consumir una cantidad de ingrediente superior de la que hay.
 - "No hay stock disponible" si la cantidad es 0.
+
+## API REST (JSON):
+- `GET /ingredientes/api` — lista de ingredientes en JSON.
+- `GET /ingredientes/api/<nombre>` — detalle de un ingrediente en JSON (404 + JSON `{"error": ...}` si no existe).
+- `GET /bocadillos/api` — lista de bocadillos en JSON.
+- `GET /bocadillos/api/<nombre>` — detalle de un bocadillo en JSON (404 + JSON `{"error": ...}` si no existe).
+- `GET /usuarios/api` — lista de usuarios en JSON.
+- `GET /usuarios/api/<nombre>` — detalle de un usuario en JSON (404 + JSON `{"error": ...}` si no existe).
+  
+### Ejemplo comando por consola:
+
+```bash
+curl http://localhost:5000/ingredientes/api | ConvertFrom-Json  # Powershell
+curl http://localhost:5000/ingredientes/api | python -m json.tool # GitBash
