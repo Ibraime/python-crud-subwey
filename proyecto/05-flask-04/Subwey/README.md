@@ -52,7 +52,7 @@ cd ..
 Segundo hay que usar el script de crear_bd para asegurar que la base de datos tiene los datos iniciales
 
 ```bash
-python -m crear_bd.py  
+python crear_bd.py  
 ```
 
 Para ejecutar la aplicación desde la raíz del proyecto (Desde la carpeta padre de Subwey (05-flask-01, en adelante)):

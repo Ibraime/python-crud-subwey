@@ -24,7 +24,7 @@ cd ..
 
 ## Preparar o reiniciar base de datos
 ```bash
-python -m crear_bd  
+python crear_bd.py  
 ```
 
 ## Ejecutar la aplicación web
