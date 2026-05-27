@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>🧀 Ingredientes</h2>
+
+<ul>
+
+    {% for n, p, s in ingredientes %}
+
+    <li class="boc-item">
+
+        <div class="boc-info">
+
+            <div class="boc-title">
+                {{ n }}
+            </div>
+
+            <div class="boc-sub">
+                💰 {{ "%.2f"|format(p) }}€ · 📦 {{ s }}
+            </div>
+
+        </div>
+
+        <span>
+            <a class="btn" href="{{ n }}">ver</a>
+
+            <a class="btn btn-danger"
+               href="{{ n }}/eliminar">
+               eliminar
+            </a>
+        </span>
+
+    </li>
+
+    {% endfor %}
+
+</ul>
+
+<div class="center">
+
+    <a class="btn btn-secondary" href="/">
+        Inicio
+    </a>
+
+    <a class="btn" href="{{ url_for('ingredientes.crear') }}">
+    Crear ingrediente
+    </a>
+
+    <a class="btn btn-secondary"
+       href="{{ url_for('ingredientes.api_ingredientes') }}">
+        Ver JSON
+    </a>
+
+</div>
+
+{% endblock %}

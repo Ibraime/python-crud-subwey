@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>🥪 Bocadillos</h2>
+
+<ul class="boc-list">
+
+    {% for b in bocadillos %}
+
+    <li class="boc-item">
+
+        <div class="boc-info">
+
+            <div class="boc-title">
+                {{ b.nombre }}
+
+                {% if b.es_promocional() %}
+                    🏷️ ({{ b.descuento }}%)
+                {% endif %}
+            </div>
+
+            <div class="boc-sub">
+                👤 {{ b.autor.nombre }}
+                ·
+                💰 {{ "%.2f"|format(b.precio) }}€
+                <br>
+
+                🥬
+                {% set ingredientes = b.ingredientes | map(attribute='nombre') | join(', ') %}
+
+                {% if ingredientes|length > 60 %}
+                    {{ ingredientes[:60] }}...
+                {% else %}
+                    {{ ingredientes }}
+                {% endif %}
+            </div>
+
+        </div>
+
+        <div class="boc-actions">
+            <a class="btn" href="/bocadillos/{{ b.nombre }}">ver</a>
+
+            <a class="btn btn-danger"
+               href="/bocadillos/{{ b.nombre }}/eliminar">
+                eliminar
+            </a>
+        </div>
+
+    </li>
+
+    {% endfor %}
+
+</ul>
+
+<div class="center">
+    <a class="btn btn-secondary" href="/">Inicio</a>
+    <a class="btn" href="/bocadillos/nuevo/">Crear bocadillo</a>
+    <a class="btn btn-secondary"
+       href="{{ url_for('bocadillos.api_bocadillos') }}">
+        Ver JSON
+    </a>
+</div>
+
+{% endblock %}

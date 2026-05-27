@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>📚 Rutas disponibles</h2>
+
+<table class="tabla">
+
+    <tr>
+        <th>Ruta</th>
+        <th>Endpoint</th>
+    </tr>
+
+    {% for r in rutas %}
+
+    <tr>
+        <td>
+            <code>{{ r.ruta }}</code>
+        </td>
+
+        <td>{{ r.endpoint }}</td>
+    </tr>
+
+    {% endfor %}
+
+</table>
+
+<br>
+
+<a class="btn btn-secondary" href="/">
+    Volver
+</a>
+
+{% endblock %}

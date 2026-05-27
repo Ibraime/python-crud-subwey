@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>{{ bocadillo.nombre }}</h2>
+
+<p>👤 {{ bocadillo.autor.nombre }}</p>
+
+<p>
+    🥬
+    {{ bocadillo.ingredientes | map(attribute='nombre') | join(', ') }}
+</p>
+
+<p>💰 {{ "%.2f"|format(bocadillo.precio) }}€</p>
+
+{% if bocadillo.es_promocional() %}
+    <p>🏷️ Promo: {{ bocadillo.descuento }}%</p>
+{% endif %}
+
+<div class="center">
+    <a class="btn"
+       href="/bocadillos/{{ bocadillo.nombre }}/editar">
+        Editar
+    </a>
+
+    <a class="btn btn-secondary" href="/bocadillos">
+        Volver
+    </a>
+</div>
+
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Nuevo ingrediente</h2>
+
+{% if error %}
+<p style="color:red"><strong>Error:</strong> {{ error }}</p>
+{% endif %}
+
+<form method="post">
+
+    <p>Nombre:</p>
+    <input name="nombre" value="{{ nombre }}" required>
+
+    <p>Precio:</p>
+    <input type="number" step="0.01" name="precio" value="{{ precio }}" required>
+
+    <p>Stock:</p>
+    <input type="number" name="stock" value="{{ stock }}" required>
+
+    <br><br>
+
+    <button class="btn">Crear</button>
+
+</form>
+
+<br>
+
+<a class="btn btn-secondary" href="{{ url_for('ingredientes.listar') }}">
+    Volver
+</a>
+
+{% endblock %}
